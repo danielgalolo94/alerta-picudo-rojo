@@ -1,5 +1,5 @@
 import { codigoReporte } from '../../lib/codigo-reporte.js';
-import { gradosALegible } from '../../lib/ubicacion.js';
+import { gradosALegible, aproximar } from '../../lib/ubicacion.js';
 
 // Persistencia y APIs del dispositivo para Alerta Picudo Rojo.
 // Funciona en cualquier navegador moderno y dentro de un WebView (Capacitor / Android) sin cambios.
@@ -62,8 +62,7 @@ const AJUSTES_POR_DEFECTO = {
   jurisdiccion: '',
   escala: 'grande',
   contraste: false,
-  permisos: { ubicacion: false, camara: false, notificaciones: false, analitica: false },
-  endpoint: '',
+  permisos: { ubicacion: false, camara: false, notificaciones: false },
   consentimientoLegal: false,
 };
 
@@ -139,10 +138,10 @@ function ubicacionActual(opciones) {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) return reject(new Error('Este dispositivo no informa ubicación.'));
     navigator.geolocation.getCurrentPosition(
-      (pos) => resolve({
+      (pos) => resolve(aproximar({
         lat: pos.coords.latitude, lon: pos.coords.longitude,
         precision: Math.round(pos.coords.accuracy || 0), ts: pos.timestamp,
-      }),
+      })),
       (err) => {
         const msgs = {
           1: 'Permiso de ubicación denegado. Podés marcar el punto a mano.',
@@ -151,32 +150,12 @@ function ubicacionActual(opciones) {
         };
         reject(new Error(msgs[err.code] || 'No se pudo obtener la ubicación.'));
       },
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000, ...(opciones || {}) }
+      { enableHighAccuracy: false, timeout: 12000, maximumAge: 60000, ...(opciones || {}) }
     );
   });
 }
 
-/* ── Envío de reportes: cola local con reintento ── */
-
-function enLinea() {
-  return typeof navigator.onLine === 'boolean' ? navigator.onLine : true;
-}
-
-async function enviarReporte(reporte, endpoint) {
-  if (!endpoint) return { ok: false, motivo: 'sin-endpoint' };
-  if (!enLinea()) return { ok: false, motivo: 'sin-conexion' };
-  try {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(reporte),
-    });
-    if (!res.ok) return { ok: false, motivo: 'http-' + res.status };
-    return { ok: true };
-  } catch (e) {
-    return { ok: false, motivo: 'red' };
-  }
-}
+/* ── Compartir: siempre por acción de la persona (no hay envío automático a ningún servidor) ── */
 
 function textoParaCompartir(reporte) {
   const lineas = [
@@ -190,18 +169,33 @@ function textoParaCompartir(reporte) {
     reporte.ubicacion ? 'Ubicación aproximada: ' + gradosALegible(reporte.ubicacion.lat, reporte.ubicacion.lon) + ' (±' + reporte.ubicacion.precision + ' m)' : 'Ubicación: no informada',
     'Contacto: ' + reporte.email + (reporte.telefono ? ' · ' + reporte.telefono : ''),
     reporte.comentarios ? 'Comentarios: ' + reporte.comentarios : '',
-    'Fotografías adjuntas: ' + reporte.fotos.length,
+    reporte.fotos.length ? 'Fotos tomadas: ' + reporte.fotos.length + ' (si no llegaron adjuntas, las mando aparte)' : '',
     '',
     'Este reporte constituye una alerta u orientación ciudadana y no reemplaza una identificación o diagnóstico oficial.',
   ];
   return lineas.filter(Boolean).join('\n');
 }
 
+async function fotosComoArchivos(reporte) {
+  try {
+    return await Promise.all(reporte.fotos.map(async (f, i) => {
+      const blob = await (await fetch(f.dataUrl)).blob();
+      return new File([blob], reporte.codigo + '-' + (i + 1) + '.jpg', { type: blob.type || 'image/jpeg' });
+    }));
+  } catch (e) {
+    return [];
+  }
+}
+
 async function compartirReporte(reporte) {
   const texto = textoParaCompartir(reporte);
   if (navigator.share) {
     try {
-      await navigator.share({ title: 'Alerta Picudo Rojo ' + reporte.codigo, text: texto });
+      const datos = { title: 'Alerta Picudo Rojo ' + reporte.codigo, text: texto };
+      // Las fotos viajan adjuntas cuando el teléfono lo permite (WhatsApp, mail desde el menú de compartir).
+      const files = await fotosComoArchivos(reporte);
+      if (files.length && navigator.canShare && navigator.canShare({ files })) datos.files = files;
+      await navigator.share(datos);
       return { ok: true, via: 'share' };
     } catch (e) {
       if (e && e.name === 'AbortError') return { ok: false, via: 'cancelado' };
@@ -215,4 +209,4 @@ async function compartirReporte(reporte) {
   }
 }
 
-export const S = { AJUSTES_POR_DEFECTO, leerAjustes, guardarAjustes, leerPalmeras, guardarPalmeras, leerReportes, guardarReportes, nuevoId, codigoReporte, comprimirImagen, pesoLegible, ubicacionActual, gradosALegible, enLinea, enviarReporte, textoParaCompartir, compartirReporte };
+export const S = { AJUSTES_POR_DEFECTO, leerAjustes, guardarAjustes, leerPalmeras, guardarPalmeras, leerReportes, guardarReportes, nuevoId, codigoReporte, comprimirImagen, pesoLegible, ubicacionActual, gradosALegible, textoParaCompartir, compartirReporte };

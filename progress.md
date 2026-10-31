@@ -15,6 +15,18 @@
 - `AGENTS.md`, `LEEME.md`, GitHub Actions con `npm test`.
 - Probado en 390×844, 820×1180 y 1180×820 sin scroll horizontal ni errores de consola.
 
+**Revisión independiente (antes de publicar), corregido:**
+- Borrar los datos con el test terminado colgaba la pantalla del test.
+- La alerta siguiente heredaba fotos, síntomas, ubicación y consentimiento de la anterior.
+- "Guardado" aunque el navegador no dejara guardar: ahora avisa.
+- Un link con hash roto dejaba la app en blanco; un reporte inexistente mostraba otro.
+- Ubicación: se guarda aproximada (~100 m), como dice la pantalla.
+- Las fotos van adjuntas al compartir cuando el teléfono lo permite.
+- Borrado el código de envío a un servidor que no se usaba (nada sale sin acción de la persona).
+- Red lenta: después de 4 s se usa la copia guardada.
+
+**Pendientes menores de la revisión:** si en el formulario se cambia la especie, el nivel no se recalcula; los enlaces mailto muy largos pueden cortarse en algunos clientes; al redibujar se pierde el foco del campo que se está escribiendo.
+
 ## Pendiente — funciones del diseño original que la versión modular no trae (tanda 2)
 El diseño viejo está en el historial (`git show 6335605:src/app.dc.js` y `src/body-renderizado.html`).
 - [ ] "Vi un insecto adulto" → avisar primero al Senasa (email, WhatsApp, teléfono) desde el resultado.

@@ -18,3 +18,14 @@ describe('gradosALegible', () => {
     assert.strictEqual(s, '0.00000° N, 0.00000° E');
   });
 });
+
+import { aproximar } from '../lib/ubicacion.js';
+
+describe('aproximar (privacidad: no guardar la casa exacta)', () => {
+  it('redondea a 3 decimales (~100 m) y la precisión nunca baja de 100 m', () => {
+    assert.deepStrictEqual(aproximar({ lat: -34.603712, lon: -58.381598, precision: 8, ts: 1 }), { lat: -34.604, lon: -58.382, precision: 100, ts: 1 });
+  });
+  it('si el GPS ya era impreciso, conserva esa precisión', () => {
+    assert.strictEqual(aproximar({ lat: 1, lon: 2, precision: 450 }).precision, 450);
+  });
+});

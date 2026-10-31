@@ -5,13 +5,19 @@ const PANTALLAS = new Set([
   'listo', 'reporte', 'reportes', 'mas', 'privacidad',
 ]);
 
-export function leerHash() {
-  const raw = location.hash.replace(/^#\/?/, '');
-  const partes = raw.split('/');
+// Un link cortado (ej. "%E0") no se puede decodificar: se usa tal cual en vez de romper la app.
+const decodificar = (s) => { try { return decodeURIComponent(s); } catch { return s; } };
+
+export function partirHash(hash) {
+  const partes = hash.replace(/^#\/?/, '').split('/');
   return {
-    pantalla: decodeURIComponent(partes[0] || 'inicio'),
-    parametro: partes[1] ? decodeURIComponent(partes.slice(1).join('/')) : null,
+    pantalla: decodificar(partes[0] || 'inicio'),
+    parametro: partes[1] ? decodificar(partes.slice(1).join('/')) : null,
   };
+}
+
+export function leerHash() {
+  return partirHash(location.hash);
 }
 
 export function pantallaValida(pantalla) {

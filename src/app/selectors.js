@@ -3,7 +3,10 @@
 import { C, S } from './data.js';
 
 export function nivelKeyDeReporte(rep) {
-  return rep && rep.nivelKey ? rep.nivelKey : 'sin-evaluar';
+  if (rep && rep.nivelKey) return rep.nivelKey;
+  // Reportes de la versión anterior: sin nivelKey, pero con el título del nivel.
+  const k = rep && Object.keys(C.NIVELES).find((n) => C.NIVELES[n].titulo === rep.nivel);
+  return k || 'sin-evaluar';
 }
 
 export function textoResultado(state) {

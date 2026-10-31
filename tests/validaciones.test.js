@@ -48,3 +48,10 @@ describe('validarFormulario', () => {
     assert.ok(r.some((e) => e.includes('confirmación')));
   });
 });
+
+import { test } from 'node:test';
+test('sin ajustes guardados no rompe: pide provincia y localidad', () => {
+  const e = validarFormulario({ email: 'a@b.com' }, null, true);
+  assert.ok(e.some((x) => x.includes('provincia')));
+  assert.ok(e.some((x) => x.includes('localidad')));
+});

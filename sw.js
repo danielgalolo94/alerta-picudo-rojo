@@ -51,13 +51,16 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  const red = fetch(req).then((res) => {
+    if (res.ok) { const copia = res.clone(); caches.open(CACHE).then((c) => c.put(req, copia)).catch(() => {}); }
+    return res;
+  });
+  const guardada = () => caches.match(req, { ignoreSearch: true })
+    .then((r) => r || (req.mode === 'navigate' ? caches.match('index.html') : undefined));
+  // Señal débil: si la red tarda más de 4 s y hay copia guardada, se usa la copia (la red igual actualiza la caché).
+  const lenta = new Promise((ok) => setTimeout(ok, 4000)).then(guardada).then((r) => r || red);
   e.respondWith(
-    fetch(req)
-      .then((res) => {
-        if (res.ok) { const copia = res.clone(); caches.open(CACHE).then((c) => c.put(req, copia)); }
-        return res;
-      })
-      .catch(() => caches.match(req, { ignoreSearch: true })
-        .then((r) => r || (req.mode === 'navigate' ? caches.match('index.html') : Response.error()))),
+    Promise.race([red, lenta])
+      .catch(() => guardada().then((r) => r || Response.error())),
   );
 });

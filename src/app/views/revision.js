@@ -59,7 +59,7 @@ function pasoFotos() {
       return `
       <div class="foto">
         <label class="foto-vacia">
-          <input type="file" accept="image/*" capture="environment" data-foto="${t.id}" aria-label="Agregar foto de ${esc(t.nombre)}">
+          <input type="file" name="foto-${t.id}" accept="image/*" capture="environment" data-foto="${t.id}" aria-label="Agregar foto de ${esc(t.nombre)}">
           ${ico('camara')}
           <strong>${esc(t.nombre)}</strong>
           <span>${esc(t.guia)}</span>
@@ -67,7 +67,7 @@ function pasoFotos() {
       </div>`;
     }).join('')}
   </div>
-  <p class="nota-fotos">${cantidad} de ${C.TOMAS.length} fotos agregadas. No se envían solas: quedan dentro del reporte que decidas compartir.</p>`;
+  <p class="nota-fotos">${cantidad} de ${C.TOMAS.length} fotos agregadas. No se envían solas: van adjuntas cuando compartís el reporte, si tu teléfono lo permite.</p>`;
 }
 
 function vistaResultado() {
@@ -144,7 +144,8 @@ function vistaResultado() {
 }
 
 export function vistaTest() {
-  if (state.paso === 4) return vistaResultado();
+  if (state.paso === 4 && state.resultado) return vistaResultado();
+  if (state.paso === 4) state.paso = 1; // se borraron los datos con el test terminado
 
   const titulos = ['¿Qué palmera tenés?', '¿Qué signos ves?', 'Sumá fotos (opcional)'];
   const ayudas = ['Elegí la especie', 'Marcá todo lo que veas', 'Ayudan a preevaluar'];

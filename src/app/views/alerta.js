@@ -101,7 +101,7 @@ export function vistaAlerta() {
 
         <div class="campo full">
           <label class="consent">
-            <input type="checkbox" data-campo="consent" ${state.form.consent ? 'checked' : ''}>
+            <input type="checkbox" id="consent" name="consent" data-campo="consent" ${state.form.consent ? 'checked' : ''}>
             <span>Acepto que este reporte es una orientación ciudadana y no un diagnóstico oficial. Los datos quedan en este dispositivo hasta que yo los comparta. <a href="#/privacidad">Privacidad</a>.</span>
           </label>
         </div>

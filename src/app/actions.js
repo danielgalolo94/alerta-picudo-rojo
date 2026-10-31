@@ -1,6 +1,7 @@
 // Acciones de usuario: navegación del test, formulario, fotos, ubicación y reportes.
 
-import { C, S } from './data.js';
+import { C, S, SENALES } from './data.js';
+import { senalesDe } from '../../lib/senales.js';
 import { state, update, resetTest, setForm, setJurisdiccion } from './store.js';
 import { ir } from './router.js';
 import { toast, scrollArriba } from './ui.js';
@@ -65,13 +66,10 @@ async function compartirReporte(rep) {
 
 async function borrarDatos() {
   if (!window.confirm('Se van a borrar todos los reportes y palmeras guardados en este teléfono. ¿Continuar?')) return;
-  try {
-    await Promise.all([S.guardarReportes([]), S.guardarPalmeras([])]);
-  } catch (e) {
-    // Sin IndexedDB: igual limpiamos la vista.
-  }
-  update({ reportes: [], ultimo: null, fotos: {}, resultado: null });
-  toast('Datos borrados de este dispositivo');
+  const ok = (await Promise.all([S.guardarReportes([]), S.guardarPalmeras([])])).every(Boolean);
+  resetTest({ render: false });
+  update({ reportes: [], palmeras: [], ultimo: null });
+  toast(ok ? 'Datos borrados de este dispositivo' : 'No se pudo borrar lo guardado en este navegador', ok ? undefined : 'error');
 }
 
 async function enviarFormulario(ev) {
@@ -85,14 +83,16 @@ async function enviarFormulario(ev) {
   }
 
   const rep = armarReporte(state);
-  try {
-    await S.guardarReportes([rep, ...state.reportes]);
-  } catch (e) {
-    // Si el navegador no permite IndexedDB, igual mostramos el reporte.
-    console.warn('No se pudo guardar en IndexedDB:', e);
-  }
-  update({ reportes: [rep, ...state.reportes], ultimo: rep, errores: [] }, { render: false });
-  toast('Reporte generado y guardado en este dispositivo');
+  // guardarReportes devuelve false (no lanza) si el navegador no deja guardar: se avisa y se muestra igual.
+  const ok = await S.guardarReportes([rep, ...state.reportes]);
+  // La próxima alerta empieza limpia: se conservan solo los datos de contacto.
+  resetTest({ render: false });
+  update({
+    reportes: [rep, ...state.reportes], ultimo: rep, errores: [],
+    form: { ...state.form, especie: '', comentarios: '', cantidad: '1', consent: false },
+  }, { render: false });
+  if (ok) toast('Reporte generado y guardado en este dispositivo');
+  else toast('No se pudo guardar en este teléfono: compartilo ahora', 'error');
   ir('listo', rep.id);
 }
 
@@ -103,7 +103,9 @@ function onClick(ev) {
   if (!objetivo) return;
 
   if (objetivo.dataset.especie) {
-    update({ especie: objetivo.dataset.especie, form: { ...state.form, especie: objetivo.dataset.especie } });
+    const especie = objetivo.dataset.especie;
+    const visibles = new Set(senalesDe(especie, SENALES, C.SINTOMAS).senales.map((s) => s.id));
+    update({ especie, sintomas: state.sintomas.filter((id) => visibles.has(id)), form: { ...state.form, especie } });
     return;
   }
 

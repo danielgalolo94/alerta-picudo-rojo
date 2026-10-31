@@ -51,28 +51,29 @@ function vistaDetalle(rep, nuevo) {
 }
 
 export function vistaListo(id) {
-  const rep = state.reportes.find((x) => x.id === id) || state.ultimo;
-  return rep ? vistaDetalle(rep, true) : vistaReportes();
+  const rep = state.reportes.find((x) => x.id === id) || (state.ultimo && state.ultimo.id === id ? state.ultimo : null);
+  return rep ? vistaDetalle(rep, true) : vistaReportes(true);
 }
 
 export function vistaReporte(id) {
   const rep = state.reportes.find((x) => x.id === id);
-  return rep ? vistaDetalle(rep, false) : vistaReportes();
+  return rep ? vistaDetalle(rep, false) : vistaReportes(true);
 }
 
-export function vistaReportes() {
+export function vistaReportes(noEncontrado = false) {
   return `
   <div class="pagina">
     <p class="eyebrow">Tus reportes</p>
     <h1>Alertas guardadas</h1>
     <p class="lead-oscuro">Los reportes quedan en este dispositivo hasta que los borres. Envialos para que Dr. Árbol o el Senasa los reciban.</p>
+    ${noEncontrado ? '<p class="aviso">No encontramos ese reporte en este dispositivo.</p>' : ''}
     ${state.reportes.length ? `
       <div class="lista-reportes">
         ${state.reportes.map((rep) => `
           <a class="reporte-item marco" href="#/reporte/${encodeURIComponent(rep.id)}">
             <div class="reporte-item-top">
               <span class="codigo">${esc(rep.codigo)}</span>
-              <span class="nivel-mini nivel-${esc(nivelKeyDeReporte(rep))}">${esc(nivelKeyDeReporte(rep))}</span>
+              <span class="nivel-mini nivel-${esc(nivelKeyDeReporte(rep))}">${esc(C.NIVELES[nivelKeyDeReporte(rep)] ? C.ESCALA.find((e) => e.id === nivelKeyDeReporte(rep))?.label ?? '' : 'Sin evaluar')}</span>
             </div>
             <p>${esc(rep.jurisdiccion)}${rep.municipio ? ' · ' + esc(rep.municipio) : ''}</p>
             <p class="fecha">${esc(fecha(rep.creado))} · ${rep.sintomas.length} signos · ${rep.fotos.length} fotos</p>
