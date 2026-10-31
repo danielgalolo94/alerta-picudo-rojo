@@ -1,0 +1,19 @@
+{
+  "name": "Alerta Picudo Rojo · Dr. Árbol",
+  "short_name": "Alerta Picudo",
+  "description": "Asistente ciudadano para detectar signos de picudo rojo en palmeras.",
+  "lang": "es-AR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f2ec",
+  "theme_color": "#0f2e22",
+  "icons": [
+    {
+      "src": "assets/icon-apple-touch.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

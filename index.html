@@ -4,54 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f2e22">
-  <title>Alerta Picudo Rojo — Dr. Árbol</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Revisá las señales visibles del picudo rojo en tu palmera y enviá una alerta ciudadana. Iniciativa educativa de Dr. Árbol.">
+  <title>Alerta Picudo Rojo · Dr. Árbol</title>
+  <link rel="stylesheet" href="app.css">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icon-apple-touch.png">
-  <!-- Detección de dispositivo: marca data-device en <html> antes de renderizar -->
-  <script src="lib/dispositivo.js" type="module"></script>
-  <script type="module">
-    import { aplicarDispositivo } from 'lib/dispositivo.js';
-    aplicarDispositivo();
-    window.addEventListener('resize', () => aplicarDispositivo());
-  </script>
 </head>
 <body>
-  <div id="dc-root"></div>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+  <div id="app"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript>
+    <p class="sin-js">Esta app necesita JavaScript para funcionar. Podés escribirnos a <a href="mailto:picudorojoalerta@gmail.com">picudorojoalerta@gmail.com</a>.</p>
+  </noscript>
 
-  <!-- Pie DG Soluciones IT (branding de entrega).
-       Comenta la misión de Dr. Árbol: proteger palmeras del picudo rojo. -->
-  <footer class="pie-dg" style="
-    display:flex;align-items:center;justify-content:center;
-    padding:12px 0;font-size:12px;color:#ffffff;background:#0A1224;
-  ">
-    <span style="margin-right:8px;">Hecho por</span>
-    <span style="color:#4FB3F5;font-weight:700;">DG Soluciones</span>
-    <span style="color:#4FB3F5;font-weight:700;"> IT</span>
-    <span style="margin-left:8px;color:#27C8E8;">#DGSolutionsIT</span>
-    <span style="margin-left:14px;color:#F4F8FD;">—</span>
-    <span style="margin-left:4px;color:#F4F8FD;font-size:11px;">Soporte a Dr. Árbol: detectar temprano para salvar palmeras.</span>
-  </footer>
-
-  <!-- React (UMD) + runtime DC -->
-  <script src="js/script-2b94d5.js"></script>
-  <script src="js/dc-runtime.js"></script>
-  <script src="js/dc-config.js"></script>
-  <script src="js/sintomas-por-especie.js"></script>
+  <!-- Datos y almacenamiento local -->
   <script src="js/contenido.js"></script>
   <script src="js/almacenamiento.js"></script>
-  <!-- Puente puro: expone módulos de lib/ en window.APP_PURE -->
-  <script src="lib/puente-puro.js" type="module"></script>
-  <!-- Componente principal -->
-  <script src="src/app.dc.js"></script>
-
-  <!-- Service worker (PWA) solo en https -->
-  <script>
-    if ('serviceWorker' in navigator && location.protocol === 'https:') {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js').catch(function () {});
-      });
-    }
-  </script>
+  <!-- Interfaz modular -->
+  <script type="module" src="src/app/main.js"></script>
 </body>
 </html>
