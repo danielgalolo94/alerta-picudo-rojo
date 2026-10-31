@@ -332,35 +332,9 @@
 
   // IMPORTANTE: los pesos de SINTOMAS y los cortes de nivel son estimaciones
   // pendientes de validación técnica. No publicarlos como criterio oficial.
-  const SOLO_BASE = ['orificios', 'aserrin'];
+  const SOLO_BASE = ['orificios', 'aserrin']; // solo daño en la base: suele ser escarabajo rinoceronte
 
-  function evaluar(sintomasIds, especieId) {
-    const sel = SINTOMAS.filter((s) => sintomasIds.includes(s.id) && s.peso > 0);
-    const ids = sel.map((s) => s.id);
-    const esp = ESPECIES.find((e) => e.id === especieId);
-    let total = sel.reduce((a, s) => a + s.peso, 0);
-    const razones = sel.map((s) => ({ texto: s.label, peso: '+' + s.peso, grado: s.peso >= 3 ? 'alto' : s.peso === 2 ? 'medio' : 'bajo' }));
-    if (esp && esp.riesgo === 2 && total > 0) {
-      total += 1;
-      razones.push({ texto: esp.comun + ' es una especie considerada susceptible', peso: '+1', grado: 'medio' });
-    }
-    if (!razones.length) razones.push({ texto: 'No marcaste ninguno de los signos listados', peso: '0', grado: 'bajo' });
-    let nivel = total === 0 ? 'bajo' : total <= 4 ? 'moderado' : 'alto';
-    const enlaces = [];
-    // Reglas directas: se aplican antes que la suma de puntajes.
-    if (ids.includes('larvas') || ids.includes('cogollo')) {
-      nivel = 'alto';
-    } else if (ids.length && ids.every((id) => SOLO_BASE.includes(id))) {
-      // Solo daño en la base del tronco: suele ser escarabajo rinoceronte.
-      nivel = 'moderado';
-      enlaces.push('strategus');
-    } else if (ids.length === 1 && ids[0] === 'insectos') {
-      // Un insecto solo no alcanza: puede ser otra especie.
-      nivel = 'moderado';
-      enlaces.push('plagas');
-    }
-    return { total, nivel, razones, enlaces };
-  }
+  // El cálculo del nivel vive en lib/evaluador.js y usa estos datos (una sola fuente).
 
   // El peso numérico queda solo en el cálculo: al ciudadano se le muestra una
   // etiqueta cualitativa, para que no se lea como una fórmula de diagnóstico.
@@ -378,5 +352,5 @@
     alto: { titulo: 'Nivel de alerta alto', resumen: 'La combinación de signos que marcaste es compatible con actividad de un insecto perforador. Avisanos para que hagamos una preevaluación.' },
   };
 
-  window.APR_CONTENIDO = { ESPECIES, SINTOMAS, TOMAS, ARTICULOS, PLAGAS, ETAPAS, QUE_HACER, QUE_NO_HACER, JURISDICCIONES, MOTIVOS, CONTACTO, enlaceWhatsapp, enlaceEmail, APP, mensajeCompartirApp, enlaceCompartirApp, CICLO_LAMINA, SENASA, enlaceSenasaEmail, enlaceSenasaWhatsapp, OTRAS_CAUSAS, DATOS_PERSONALES, evaluar, NIVELES, ESCALA, GRADO_LABEL, LOCALIDADES };
+  window.APR_CONTENIDO = { ESPECIES, SINTOMAS, TOMAS, ARTICULOS, PLAGAS, ETAPAS, QUE_HACER, QUE_NO_HACER, JURISDICCIONES, MOTIVOS, CONTACTO, enlaceWhatsapp, enlaceEmail, APP, mensajeCompartirApp, enlaceCompartirApp, CICLO_LAMINA, SENASA, enlaceSenasaEmail, enlaceSenasaWhatsapp, OTRAS_CAUSAS, DATOS_PERSONALES, SOLO_BASE, NIVELES, ESCALA, GRADO_LABEL, LOCALIDADES };
 })();

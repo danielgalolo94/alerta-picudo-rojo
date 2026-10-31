@@ -219,7 +219,7 @@ h1, h2, h3, h4 {
 .seccion-head h2 {
   margin: 4px 0 0;
   font-size: clamp(27px, 3.2vw, 38px);
-  line-height: .98;
+  line-height: 1.04;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .005em;
@@ -254,7 +254,7 @@ h1, h2, h3, h4 {
 .pagina h1, .pagina-angosta h1, .test-head h1 {
   margin: 6px 0 0;
   font-size: clamp(34px, 5vw, 52px);
-  line-height: .94;
+  line-height: 1.04;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -378,9 +378,10 @@ h1, h2, h3, h4 {
 .hero-copy { min-width: 0; }
 .hero h1 {
   margin: 12px 0 0;
-  max-width: 12ch;
+  max-width: 14ch;
+  text-wrap: balance;
   font-size: clamp(42px, 7.2vw, 76px);
-  line-height: .86;
+  line-height: 1.02;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -.005em;
@@ -507,7 +508,7 @@ h1, h2, h3, h4 {
 .banda-copy h2 {
   margin: 6px 0 0;
   font-size: clamp(28px, 3.6vw, 42px);
-  line-height: .96;
+  line-height: 1.04;
   text-transform: uppercase;
 }
 .banda-copy p { margin: 13px 0 0; color: var(--tinta-2); font-size: 16px; }
@@ -565,7 +566,7 @@ h1, h2, h3, h4 {
   margin: 7px 0 0;
   max-width: 22ch;
   font-size: clamp(30px, 4vw, 46px);
-  line-height: .93;
+  line-height: 1.04;
   text-transform: uppercase;
 }
 .cta-final p { margin: 10px 0 0; max-width: 52ch; color: #c4d5c8; }

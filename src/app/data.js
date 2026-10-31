@@ -1,11 +1,11 @@
 // Datos y constantes compartidas de la app.
-// Los módulos clásicos (contenido.js y almacenamiento.js) se cargan antes que este entry.
+// El contenido editable (js/contenido.js y js/sintomas-por-especie.js) son scripts clásicos que se cargan antes que este entry.
 
+export { S } from './almacenamiento.js';
 export const C = window.APR_CONTENIDO;
-export const S = window.APR_STORE;
 
-if (!C || !S) {
-  throw new Error('No se cargaron contenido.js / almacenamiento.js antes de la app.');
+if (!C) {
+  throw new Error('No se cargó js/contenido.js antes de la app.');
 }
 
 export const NAV = [

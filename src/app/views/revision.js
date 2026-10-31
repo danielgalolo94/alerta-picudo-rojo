@@ -1,6 +1,6 @@
 // Test de 4 pasos y resultado.
 
-import { C, SENALES } from '../data.js';
+import { C, S, SENALES } from '../data.js';
 import { senalesDe } from '../../../lib/senales.js';
 import { state } from '../store.js';
 import { esc, ico } from '../ui.js';
@@ -53,7 +53,7 @@ function pasoFotos() {
         return `
         <div class="foto">
           <img class="foto-preview" src="${f.dataUrl}" alt="Foto: ${esc(t.nombre)}">
-          <div class="foto-pie"><span>${esc(t.nombre)} · ${window.APR_STORE.pesoLegible(f.bytes)}</span><button type="button" data-quitar-foto="${t.id}">Quitar</button></div>
+          <div class="foto-pie"><span>${esc(t.nombre)} · ${S.pesoLegible(f.bytes)}</span><button type="button" data-quitar-foto="${t.id}">Quitar</button></div>
         </div>`;
       }
       return `

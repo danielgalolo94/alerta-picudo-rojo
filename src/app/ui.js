@@ -19,6 +19,7 @@ const ICONS = {
   test: '<circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/>',
   aprender: '<path d="M4 5.5A1.5 1.5 0 015.5 4H10a2 2 0 012 2v14H4zM20 5.5A1.5 1.5 0 0018.5 4H14a2 2 0 00-2 2v14h8z"/>',
   alerta: '<path d="M12 4a5 5 0 00-5 5c0 4-2 5-2 5h14s-2-1-2-5a5 5 0 00-5-5zM10 18a2 2 0 004 0"/>',
+  reportes: '<path d="M12 4a5 5 0 00-5 5c0 4-2 5-2 5h14s-2-1-2-5a5 5 0 00-5-5zM10 18a2 2 0 004 0"/>',
   mas: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
   flecha: '<path d="M4 12h15M13 6l6 6-6 6"/>',
   check: '<path d="M4 12.5l5 5L20 6.5"/>',

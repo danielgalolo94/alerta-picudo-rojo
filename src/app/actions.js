@@ -143,7 +143,7 @@ function onClick(ev) {
       break;
 
     case 'ver-resultado':
-      update({ resultado: evaluar(state.sintomas, state.especie), paso: 4 });
+      update({ resultado: evaluar(state.sintomas, state.especie, C), paso: 4 });
       scrollArriba();
       break;
 

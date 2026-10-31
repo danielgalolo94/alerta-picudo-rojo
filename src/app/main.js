@@ -75,3 +75,8 @@ async function init() {
 }
 
 init();
+
+// Modo sin conexión (sw.js). Si el navegador no lo soporta, la app funciona igual con señal.
+if ('serviceWorker' in navigator) {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
