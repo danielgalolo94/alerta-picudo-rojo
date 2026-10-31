@@ -16,20 +16,8 @@ export const NAV = [
   { id: 'mas', label: 'Más', href: '#/mas' },
 ];
 
-export const FOTO_SINTOMA = {
-  centrales: 'dano-corona-picudo',
-  corona: 'dano-corona-picudo',
-  cogollo: 'dano-corona-picudo',
-  base: 'dano-corona-picudo',
-  fibras: 'dano-corona-picudo',
-  mordidas: 'signos-tempranos-picudo',
-  caida: 'signos-avanzados-comparacion',
-  orificios: 'dano-estipe-picudo-negro',
-  tejido: 'dano-base-strategus',
-  aserrin: 'dano-base-strategus',
-  larvas: 'larva-picudo-rojo',
-  insectos: 'picudo-rojo-recorte',
-};
+// Señales del paso 2 por especie (contenido editable en js/sintomas-por-especie.js).
+export const SENALES = window.APR_SENALES?.SENALES ?? {};
 
 export const IMG_ART = {
   que: 'picudo-rojo-adulto-uno',

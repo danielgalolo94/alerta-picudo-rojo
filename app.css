@@ -1298,3 +1298,11 @@ h1, h2, h3, h4 {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* Paso 2 por especie: croquis, descripción de cada señal y foto pendiente */
+.croquis { margin: 0 0 12px; border-radius: 10px; overflow: hidden; background: #f3f5ef; }
+.croquis img { display: block; width: 100%; height: auto; }
+.croquis-pend { padding: 14px; text-align: center; color: #5b6b60; font-size: 14px; }
+.croquis figcaption { padding: 8px 12px; font-size: 13px; color: #5b6b60; }
+.sintoma-desc { display: block; margin-top: 3px; font-size: 13px; font-weight: 400; color: #5b6b60; line-height: 1.3; }
+.foto-pend { font-size: 10px; line-height: 1.1; text-align: center; padding: 4px; }

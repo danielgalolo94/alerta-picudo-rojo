@@ -1,6 +1,7 @@
 // Test de 4 pasos y resultado.
 
-import { C, FOTO_SINTOMA } from '../data.js';
+import { C, SENALES } from '../data.js';
+import { senalesDe } from '../../../lib/senales.js';
 import { state } from '../store.js';
 import { esc, ico } from '../ui.js';
 
@@ -17,19 +18,24 @@ function pasoEspecie() {
   </div>`;
 }
 
+// Paso 2: las señales de la especie elegida, con su croquis y sus fotos (o "pendiente").
 function pasoSintomas() {
+  const { senales, croquis, croquisNota, sinFotos } = senalesDe(state.especie, SENALES, C.SINTOMAS);
+  const croq = croquis
+    ? `<figure class="croquis"><img src="${esc(croquis)}" alt="Partes de la palmera para ubicar las señales">${croquisNota ? `<figcaption>${esc(croquisNota)}</figcaption>` : ''}</figure>`
+    : (state.especie && state.especie !== 'nose' ? '<p class="croquis croquis-pend">Croquis pendiente</p>' : '');
   return `
   <p class="panel-intro">Marcá todas las señales que puedas ver. Si no ves ninguna, elegí “Ninguno de estos”.</p>
+  ${croq}
   <div class="sintomas">
-    ${C.SINTOMAS.map((s) => {
+    ${senales.map((s) => {
       const on = state.sintomas.includes(s.id);
-      const foto = FOTO_SINTOMA[s.id];
+      const img = s.id === 'ninguno' || sinFotos ? `<span class="sintoma-sin" aria-hidden="true">${s.id === 'ninguno' ? '✓' : '·'}</span>`
+        : s.foto ? `<img src="${esc(s.foto)}" alt="" loading="lazy">` : '<span class="sintoma-sin foto-pend" aria-hidden="true">Foto pendiente</span>';
       return `
         <button type="button" class="sintoma" data-sintoma="${s.id}" aria-pressed="${on}">
-          ${foto
-            ? `<img src="assets/images/${foto}.webp" alt="" loading="lazy">`
-            : `<span class="sintoma-sin" aria-hidden="true">${s.id === 'ninguno' ? '✓' : '·'}</span>`}
-          <span class="sintoma-label">${esc(s.label)}</span>
+          ${img}
+          <span class="sintoma-label">${esc(s.titulo)}${s.descripcion ? `<small class="sintoma-desc">${esc(s.descripcion)}</small>` : ''}</span>
           <span class="check" aria-hidden="true">${on ? ico('check') : ''}</span>
         </button>`;
     }).join('')}
