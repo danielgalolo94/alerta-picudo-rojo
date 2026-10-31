@@ -1,0 +1,8 @@
+Alerta Picudo Rojo - fuentes extraidas el 26/10/2026
+
+assets/images: 90 imagenes webp (variables CSS --i-nombre)
+assets/fonts: Barlow y Barlow Condensed woff2
+js: runtime y modulos de contenido/almacenamiento
+src/app.dc.js: componente principal (React)
+src/styles.css: estilos con rutas relativas
+src/body-renderizado.html: maquetado tal como renderiza

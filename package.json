@@ -1,0 +1,9 @@
+{
+  "name": "alerta-picudo-rojo",
+  "version": "1.0.0",
+  "description": "Asistente ciudadano para detectar signos de picudo rojo en palmeras",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
