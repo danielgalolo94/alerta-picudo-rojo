@@ -14,6 +14,7 @@ import { vistaSospecho } from './views/sospecho.js';
 import { vistaAlerta } from './views/alerta.js';
 import { vistaListo, vistaReporte, vistaReportes } from './views/reportes.js';
 import { vistaMas, vistaPrivacidad } from './views/mas.js';
+import { vistaPlagas, vistaPlaga } from './views/plagas.js';
 
 const VISTAS = {
   inicio: vistaInicio,
@@ -27,6 +28,8 @@ const VISTAS = {
   reportes: vistaReportes,
   mas: vistaMas,
   privacidad: vistaPrivacidad,
+  plagas: vistaPlagas,
+  plaga: vistaPlaga,
 };
 
 const TITULOS = {
@@ -41,6 +44,8 @@ const TITULOS = {
   reportes: 'Mis reportes',
   mas: 'Más',
   privacidad: 'Privacidad',
+  plagas: 'Otras plagas',
+  plaga: 'Ficha comparativa',
 };
 
 function render() {

@@ -2,7 +2,7 @@
 // Red primero: con señal siempre se ve la última versión publicada; sin señal, la copia guardada.
 // El esqueleto se guarda al instalar; las fotos y demás archivos, la primera vez que se abren.
 // Si se agrega un archivo de la app, sumarlo a ESQUELETO (tests/sw.test.js avisa si falta).
-const CACHE = 'apr-v1';
+const CACHE = 'apr-v2';
 const ESQUELETO = [
   './',
   'index.html',
@@ -23,6 +23,7 @@ const ESQUELETO = [
   'src/app/views/aprender.js',
   'src/app/views/inicio.js',
   'src/app/views/mas.js',
+  'src/app/views/plagas.js',
   'src/app/views/reportes.js',
   'src/app/views/revision.js',
   'src/app/views/senasa.js',
@@ -54,10 +55,12 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
-  const red = fetch(req).then((res) => {
+  // no-cache: revalida con el servidor (ETag), así una versión nueva llega en la próxima carga.
+  const red = fetch(req.mode === 'navigate' ? req.url : req, { cache: 'no-cache' }).then((res) => {
     if (res.ok) { const copia = res.clone(); caches.open(CACHE).then((c) => c.put(req, copia)).catch(() => {}); }
     return res;
   });
+  red.catch(() => {}); // si gana la copia y la red falla después, que no quede un error suelto
   const guardada = () => caches.match(req, { ignoreSearch: true })
     .then((r) => r || (req.mode === 'navigate' ? caches.match('index.html') : undefined));
   // Señal débil: si la red tarda más de 4 s y hay copia guardada, se usa la copia (la red igual actualiza la caché).

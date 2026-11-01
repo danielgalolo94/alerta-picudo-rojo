@@ -1317,3 +1317,30 @@ h1, h2, h3, h4 {
 .pregunta-adulto small { display: block; margin-top: 2px; font-size: 13px; color: #5b6b60; }
 .pregunta-adulto .check { flex: 0 0 24px; height: 24px; border: 1.5px solid var(--verde); border-radius: 5px; display: grid; place-items: center; }
 .pregunta-adulto[aria-pressed="true"] .check { background: var(--verde); color: #fff; }
+
+/* Diferencial de plagas */
+.destacado-plagas { display: block; margin: 0 0 16px; text-decoration: none; color: inherit; }
+.destacado-plagas strong { display: block; font-size: 18px; color: var(--verde); }
+.destacado-plagas span { font-size: 14px; color: #5b6b60; }
+.plagas-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-bottom: 16px; }
+.plaga-item { display: flex; gap: 12px; align-items: center; padding: 10px; text-decoration: none; color: inherit; }
+.plaga-item img, .plaga-item .foto-pend { flex: 0 0 76px; width: 76px; height: 76px; object-fit: cover; border-radius: 8px; background: #f3f5ef; }
+.plaga-txt strong { display: block; font-size: 17px; }
+.plaga-txt em, .plaga-txt small { display: block; font-size: 13px; color: #5b6b60; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.chips li { padding: 6px 12px; border-radius: 999px; background: #eef2ec; font-size: 14px; }
+.cientifico { margin: 4px 0 12px; color: #5b6b60; }
+.urgencia { padding: 12px 14px; margin-bottom: 14px; background: var(--rojo-bg); }
+.urgencia p { margin: 4px 0 0; font-size: 14px; }
+.plaga-fotos { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); margin-bottom: 14px; }
+.plaga-fotos figure { margin: 0; }
+.plaga-fotos figure.ancha { grid-column: 1 / -1; }
+.plaga-fotos img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; background: #f3f5ef; }
+.plaga-fotos figure.ancha img { aspect-ratio: auto; }
+.plaga-fotos figcaption { font-size: 13px; color: #5b6b60; margin-top: 4px; line-height: 1.35; }
+.plaga-filas div, .etapa-puntos div { padding: 10px 0; border-top: 1px solid rgba(26,28,26,.1); }
+.plaga-filas dt, .etapa-puntos dt { font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--verde-3); }
+.plaga-filas dd, .etapa-puntos dd { margin: 2px 0 0; }
+.etapa-pie { font-size: 13px; color: #5b6b60; margin: 6px 0; }
+.etapa img { width: 100%; height: auto; border-radius: 8px; }
+@media (max-width: 420px) { .plaga-fotos { grid-template-columns: 1fr 1fr; } }

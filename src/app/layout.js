@@ -7,7 +7,7 @@ import { esc, ico } from './ui.js';
 function navActivo() {
   const p = state.pantalla;
   if (p === 'test') return 'test';
-  if (['aprender', 'articulo', 'sospecho'].includes(p)) return 'aprender';
+  if (['aprender', 'articulo', 'sospecho', 'plagas', 'plaga'].includes(p)) return 'aprender';
   if (['alerta', 'listo', 'reporte', 'reportes'].includes(p)) return 'reportes';
   if (['mas', 'privacidad'].includes(p)) return 'mas';
   return 'inicio';

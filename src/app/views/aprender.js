@@ -2,6 +2,7 @@
 
 import { C, IMG_ART } from '../data.js';
 import { esc } from '../ui.js';
+import { imagen } from '../../../lib/rutas.js';
 
 export function vistaAprender() {
   const grupos = [...new Set(C.ARTICULOS.map((a) => a.kicker))];
@@ -12,6 +13,10 @@ export function vistaAprender() {
     <p class="eyebrow">Biblioteca</p>
     <h1>Aprender</h1>
     <p class="lead-oscuro">Qué es el picudo rojo, cómo daña la palmera, qué signos buscar y qué hacer ante una duda. Contenido para leer y volver cuando lo necesites.</p>
+    <a class="panel marco destacado-plagas" href="#/plagas">
+      <strong>Diferencial: otras plagas y causas</strong>
+      <span>Picudo negro, paysandisia, vaquita, escarabajo rinoceronte y daños que no son plagas.</span>
+    </a>
     <div class="articulos">
       ${grupos.map((g) => `
         <section class="grupo">
@@ -57,7 +62,9 @@ export function vistaArticulo(id) {
             <span class="etapa-num">${esc(e.num)}</span>
             <h3>${esc(e.nombre)}</h3>
             <p>${esc(e.nota)}</p>
-            ${e.imagen ? `<img src="${esc(e.imagen)}" alt="${esc(e.imagenAlt || e.nombre)}" loading="lazy">` : ''}
+            ${e.imagen ? `<img src="${esc(imagen(e.imagen))}" alt="${esc(e.imagenAlt || e.nombre)}" loading="lazy">` : ''}
+            ${e.imagenPie ? `<p class="etapa-pie">${esc(e.imagenPie)}</p>` : ''}
+            ${(e.puntos || []).length ? `<dl class="etapa-puntos">${e.puntos.map((x) => `<div><dt>${esc(x.rotulo)}</dt><dd>${esc(x.texto)}</dd></div>`).join('')}</dl>` : ''}
           </article>`).join('')}
       </div>` : ''}
     ${esSensores ? `
