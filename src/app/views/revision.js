@@ -34,13 +34,18 @@ function pasoSintomas() {
     ${senales.map((s) => {
       const on = state.sintomas.includes(s.id);
       const img = s.id === 'ninguno' || sinFotos ? `<span class="sintoma-sin" aria-hidden="true">${s.id === 'ninguno' ? '✓' : '·'}</span>`
-        : s.foto ? `<img src="${esc(s.foto)}" alt="" loading="lazy">` : '<span class="sintoma-sin foto-pend" aria-hidden="true">Foto pendiente</span>';
+        : s.foto ? `<img src="${esc(s.foto)}" alt="" loading="lazy" width="64" height="64">` : '<span class="sintoma-sin foto-pend" aria-hidden="true">Foto pendiente</span>';
+      const lupa = s.foto && !sinFotos && s.id !== 'ninguno'
+        ? `<button type="button" class="sintoma-lupa" data-action="ver-foto" data-src="${esc(s.foto)}" data-titulo="${esc(s.titulo)}" aria-label="Ver grande la foto: ${esc(s.titulo)}">${ico('lupa')}</button>` : '';
       return `
+        <div class="sintoma-fila">
+        ${lupa}
         <button type="button" class="sintoma" data-sintoma="${s.id}" aria-pressed="${on}">
           ${img}
           <span class="sintoma-label">${esc(s.titulo)}${s.descripcion ? `<small class="sintoma-desc">${esc(s.descripcion)}</small>` : ''}</span>
           <span class="check" aria-hidden="true">${on ? ico('check') : ''}</span>
-        </button>`;
+        </button>
+        </div>`;
     }).join('')}
   </div>
   ${C.AVISOS.senasa.sintomasQueDisparan.some((id) => state.sintomas.includes(id)) ? `

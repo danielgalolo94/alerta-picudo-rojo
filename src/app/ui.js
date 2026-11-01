@@ -23,6 +23,7 @@ const ICONS = {
   palmeras: '<path d="M12 21V10m0 0c0-3 2-5 5-5m-5 5c0-3-2-5-5-5"/>',
   mas: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
   flecha: '<path d="M4 12h15M13 6l6 6-6 6"/>',
+  lupa: '<circle cx="11" cy="11" r="6"/><path d="M15.5 15.5L20 20M11 8v6M8 11h6"/>',
   check: '<path d="M4 12.5l5 5L20 6.5"/>',
   libro: '<path d="M4 5.5A1.5 1.5 0 015.5 4H10a2 2 0 012 2v14H4zM20 5.5A1.5 1.5 0 0018.5 4H14a2 2 0 00-2 2v14h8z"/>',
   escudo: '<path d="M12 3l7 3v5c0 4.6-3 8.2-7 10-4-1.8-7-5.4-7-10V6z"/><path d="M9 12l2 2 4-4"/>',

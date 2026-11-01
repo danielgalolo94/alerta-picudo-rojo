@@ -64,7 +64,20 @@ function render() {
   const vista = VISTAS[state.pantalla] || vistaInicio;
   const app = document.getElementById('app');
   if (!app) return;
+  // Conserva el foco y el cursor del campo que se está escribiendo (cada cambio redibuja la pantalla).
+  const foco = document.activeElement && document.activeElement.id ? document.activeElement : null;
+  const sel = foco && typeof foco.selectionStart === 'number' ? [foco.selectionStart, foco.selectionEnd] : null;
+  const html = document.documentElement;
+  html.dataset.escala = state.ajustes.escala || 'estandar';
+  html.dataset.contraste = state.ajustes.contraste ? 'si' : 'no';
   app.innerHTML = layout(vista(state.parametro));
+  if (foco && foco.id !== 'contenido') {
+    const nuevo = document.getElementById(foco.id);
+    if (nuevo) {
+      nuevo.focus({ preventScroll: true });
+      if (sel && typeof nuevo.setSelectionRange === 'function') { try { nuevo.setSelectionRange(sel[0], sel[1]); } catch (e) { /* tipo sin cursor */ } }
+    }
+  }
   document.title = (TITULOS[state.pantalla] || 'Inicio') + ' · Alerta Picudo Rojo';
 }
 

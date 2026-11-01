@@ -34,6 +34,7 @@ export const state = {
   },
   errores: [],
   modal: null,
+  zoom: null, // foto ampliada del paso 2: { src, titulo }
 };
 
 const listeners = new Set();

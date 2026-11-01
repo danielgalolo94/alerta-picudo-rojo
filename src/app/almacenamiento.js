@@ -60,7 +60,7 @@ async function escribir(clave, valor) {
 
 const AJUSTES_POR_DEFECTO = {
   jurisdiccion: '',
-  escala: 'grande',
+  escala: 'estandar',
   contraste: false,
   permisos: { ubicacion: false, camara: false, notificaciones: false },
   consentimientoLegal: false,

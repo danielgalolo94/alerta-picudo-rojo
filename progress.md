@@ -25,19 +25,28 @@
 - Borrado el código de envío a un servidor que no se usaba (nada sale sin acción de la persona).
 - Red lenta: después de 4 s se usa la copia guardada.
 
-**Pendientes menores de la revisión:** si en el formulario se cambia la especie, el nivel no se recalcula; los enlaces mailto muy largos pueden cortarse en algunos clientes; al redibujar se pierde el foco del campo que se está escribiendo.
+**Pendientes menores de la revisión:** ~~cambiar la especie en el formulario no recalcula el nivel~~ (resuelto 01/11); ~~al redibujar se pierde el foco~~ (resuelto 01/11); queda: los enlaces mailto muy largos pueden cortarse en algunos clientes.
 
 ## Pendiente — funciones del diseño original que la versión modular no trae (tanda 2)
 El diseño viejo está en el historial (`git show 6335605:src/app.dc.js` y `src/body-renderizado.html`).
-- [ ] "Vi un insecto adulto" → avisar primero al Senasa (email, WhatsApp, teléfono) desde el resultado.
-- [ ] Enlaces del resultado a las fichas de plagas parecidas (`strategus`, `plagas`): hoy el cálculo los devuelve pero no hay pantalla.
-- [ ] Diferencial de plagas y otras causas, con ficha comparativa (`PLAGAS`, `OTRAS_CAUSAS`).
-- [ ] Ciclo del picudo (lámina huevo · larva · pupa · adulto) y recorrido "Reconocer el picudo en 5 minutos".
-- [ ] Mi palmera: registrar ejemplares, historial de inspecciones y recordatorio a 30 días.
+- [x] "Vi un insecto adulto" → avisar primero al Senasa (email, WhatsApp, teléfono) desde el resultado.
+- [x] Enlaces del resultado a las fichas de plagas parecidas (`strategus`, `plagas`): hoy el cálculo los devuelve pero no hay pantalla.
+- [x] Diferencial de plagas y otras causas, con ficha comparativa (`PLAGAS`, `OTRAS_CAUSAS`).
+- [x] Ciclo del picudo (lámina huevo · larva · pupa · adulto) y recorrido "Reconocer el picudo en 5 minutos".
+- [x] Mi palmera: registrar ejemplares, historial de inspecciones y recordatorio a 30 días.
 - [ ] Prevención ("Cómo proteger mi palmera") y pantalla institucional de Dr. Árbol.
 - [ ] Privacidad: permisos (ubicación, cámara, notificaciones) y texto legal (a revisar por un abogado).
-- [ ] Accesibilidad: tamaño de letra y alto contraste; búsqueda de localidad.
-- [ ] Zoom de la foto de cada señal en el paso 2; reintentar o eliminar un reporte.
+- [x] Accesibilidad: tamaño de letra y alto contraste; búsqueda de localidad.
+- [x] Zoom de la foto de cada señal en el paso 2; eliminar un reporte (reintentar no aplica: nada se envía a un servidor).
 
 ## Decisiones
 - Pesos y cortes del nivel: estimaciones pendientes de validación técnica (no cambiar sin Dr. Árbol).
+
+## 01/11/2026 — tanda 2, cierre de accesibilidad y reportes
+- Más → Lectura: tamaño de texto (estándar, grande, muy grande) y alto contraste; se guardan en los ajustes. El tamaño por defecto pasa a "estándar".
+- Paso 2: lupa sobre cada foto, que la abre grande. El foco va a "Cerrar" y vuelve a la lupa; también cierra con Escape. La lupa tiene un área táctil de 44 px.
+- Reporte: "Eliminar este reporte del teléfono", con confirmación.
+- Formulario: cambiar la especie recalcula el nivel (canaria 8 → washingtonia 7 con los mismos signos).
+- Al redibujar se conservan el foco y el cursor del campo que se está escribiendo.
+- Probado en el navegador en 390×844, 820×1180 y 1180×820: sin scroll horizontal y sin errores (quedan 2 avisos de Chrome por campos sin id/name, que no vienen de esta tanda).
+- Sin test nuevo: son cambios de interfaz (DOM). La lógica que se reusa (`evaluar`) ya tiene tests.

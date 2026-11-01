@@ -62,5 +62,13 @@ export function layout(contenido) {
     </nav>
 
     ${state.modal ? modalHTML() : ''}
+    ${state.zoom ? `
+      <div class="modal zoom" role="dialog" aria-modal="true" aria-label="${esc(state.zoom.titulo)}">
+        <figure class="zoom-caja">
+          <img src="${esc(state.zoom.src)}" alt="Ejemplo: ${esc(state.zoom.titulo)}">
+          <figcaption>${esc(state.zoom.titulo)}</figcaption>
+        </figure>
+        <button type="button" id="cerrar-zoom" class="btn btn-verde" data-action="cerrar-zoom">Cerrar</button>
+      </div>` : ''}
   </div>`;
 }

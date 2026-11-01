@@ -33,6 +33,18 @@ export function vistaMas() {
       </section>
 
       <section class="panel marco">
+        <h2>Lectura</h2>
+        <p>Tamaño del texto</p>
+        <div class="chips" role="radiogroup" aria-label="Tamaño del texto">
+          ${[['estandar', 'Estándar'], ['grande', 'Grande'], ['muy', 'Muy grande']].map(([id, label]) => `<button type="button" class="chip ${state.ajustes.escala === id ? 'on' : ''}" role="radio" aria-checked="${state.ajustes.escala === id}" data-action="escala" data-escala="${id}">${label}</button>`).join('')}
+        </div>
+        <button type="button" class="pregunta-adulto contraste" data-action="contraste" aria-pressed="${!!state.ajustes.contraste}">
+          <span class="check" aria-hidden="true">${state.ajustes.contraste ? '✓' : ''}</span>
+          <span><strong>Alto contraste</strong><small>Textos más oscuros y bordes más marcados.</small></span>
+        </button>
+      </section>
+
+      <section class="panel marco">
         <h2>Privacidad</h2>
         <p>Los reportes, fotos y datos de contacto se guardan solo en este dispositivo. La app no los envía a ningún servidor: vos elegís cuándo compartirlos.</p>
         <a class="btn btn-outline btn-chico" href="#/privacidad">Leer el detalle</a>

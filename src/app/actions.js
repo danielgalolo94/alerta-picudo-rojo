@@ -95,6 +95,14 @@ async function enviarFormulario(ev) {
   ir('listo', rep.id);
 }
 
+async function eliminarReporte(id) {
+  if (!window.confirm('Se va a borrar este reporte de este teléfono. Si ya lo enviaste, a quien lo recibió le sigue llegando. ¿Continuar?')) return;
+  const reportes = state.reportes.filter((r) => r.id !== id);
+  const ok = await S.guardarReportes(reportes);
+  toast(ok ? 'Reporte eliminado' : 'No se pudo borrar en este navegador', ok ? undefined : 'error');
+  if (ok) { update({ reportes, ultimo: state.ultimo && state.ultimo.id === id ? null : state.ultimo }, { render: false }); ir('reportes'); }
+}
+
 /* ───────────────────────── Mi palmera ───────────────────────── */
 
 async function guardarPalmeras(palmeras, msg) {
@@ -187,6 +195,28 @@ function onClick(ev) {
     case 'ver-resultado':
       update({ resultado: evaluar(state.sintomas, state.especie, C), paso: 4 });
       scrollArriba();
+      break;
+
+    case 'escala':
+      update({ ajustes: { ...state.ajustes, escala: objetivo.dataset.escala } });
+      S.guardarAjustes(state.ajustes);
+      break;
+
+    case 'contraste':
+      update({ ajustes: { ...state.ajustes, contraste: !state.ajustes.contraste } });
+      S.guardarAjustes(state.ajustes);
+      break;
+
+    case 'ver-foto':
+      abrirZoom(objetivo.dataset.src, objetivo.dataset.titulo);
+      break;
+
+    case 'cerrar-zoom':
+      cerrarZoom();
+      break;
+
+    case 'eliminar-reporte':
+      eliminarReporte(objetivo.dataset.id);
       break;
 
     case 'motivo-consulta':
@@ -305,13 +335,36 @@ function onChange(ev) {
   }
 
   setForm(campo, ev.target.value);
+  if (campo === 'especie' && state.resultado && ev.target.value && ev.target.value !== state.especie) {
+    update({ especie: ev.target.value, resultado: evaluar(state.sintomas, ev.target.value, C) });
+    toast('Nivel recalculado para la especie elegida');
+  }
 }
 
 function onSubmit(ev) {
   if (ev.target.id === 'form-alerta') enviarFormulario(ev);
 }
 
+/* Foto ampliada: el foco va a "Cerrar" y, al cerrar, vuelve a la lupa que la abrió. */
+function abrirZoom(src, titulo) {
+  update({ zoom: { src, titulo } });
+  const cerrar = document.getElementById('cerrar-zoom');
+  if (cerrar) cerrar.focus();
+}
+
+function cerrarZoom() {
+  const src = state.zoom && state.zoom.src;
+  update({ zoom: null });
+  const lupa = src && [...document.querySelectorAll('.sintoma-lupa')].find((b) => b.dataset.src === src);
+  if (lupa) lupa.focus({ preventScroll: true });
+}
+
+function onKey(ev) {
+  if (ev.key === 'Escape' && state.zoom) cerrarZoom();
+}
+
 export function conectarEventos() {
+  document.addEventListener('keydown', onKey);
   document.addEventListener('click', onClick);
   document.addEventListener('input', onInput);
   document.addEventListener('change', onChange);

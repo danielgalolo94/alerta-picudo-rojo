@@ -35,6 +35,7 @@ function vistaDetalle(rep, nuevo) {
         <a class="btn btn-outline" href="${esc(C.enlaceEmail('Alerta Picudo Rojo ' + rep.codigo, S.textoParaCompartir(rep)))}">Enviar por email</a>
         <a class="btn btn-outline" href="${esc(C.enlaceSenasaEmail('Aviso de palmera con signos de picudo rojo ' + rep.codigo, S.textoParaCompartir(rep)))}">Avisar al Senasa</a>
       </div>
+      <button type="button" class="link peligro" data-action="eliminar-reporte" data-id="${esc(rep.id)}">Eliminar este reporte del teléfono</button>
       <p class="nota">El reporte es una orientación ciudadana y no reemplaza una identificación o diagnóstico oficial. Guardá el código ${esc(rep.codigo)} para consultas.</p>
     </div>
 
