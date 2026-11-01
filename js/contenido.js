@@ -320,6 +320,32 @@
     return 'https://wa.me/' + SENASA.whatsapp + '?text=' + encodeURIComponent(mensaje);
   }
 
+  // Avisos del resultado del test. Todo es editable: cuándo se pide avisar primero al Senasa
+  // y los textos que se muestran y se mandan. Los ids de síntomas son los de SINTOMAS.
+  const AVISOS = {
+    senasa: {
+      // Cuándo el primer paso es el Senasa (y no Dr. Árbol):
+      sintomasQueDisparan: ['larvas', 'insectos'], // alcanza con uno de estos
+      pideVerAdulto: true,                         // además, que diga que vio el insecto adulto
+      nivelesPrimero: ['moderado', 'alto'],        // y que el nivel sea uno de estos
+      // Pregunta del paso 2 (aparece si marcó alguno de sintomasQueDisparan):
+      preguntaAdulto: 'Vi el insecto adulto',
+      preguntaAdultoAyuda: 'Un gorgojo rojizo de pico curvo, de 2 a 4 cm, en la palmera o cerca.',
+      // Panel del resultado cuando corresponde avisar primero:
+      tituloPrimero: 'Avisá al Senasa',
+      textoPrimero: 'Marcaste larvas o insectos y viste el adulto: es el caso en que el organismo oficial tiene que enterarse primero. Después, si querés, mandanos la alerta.',
+      // Panel desplegable para el resto de los casos (nivel en nivelesOpcional):
+      nivelesOpcional: ['moderado', 'alto'],
+      tituloOpcional: 'También podés avisar al Senasa',
+      nota: 'El email y el WhatsApp se abren con los datos de tu revisión. Adjuntá las fotos antes de enviar.',
+      // Texto que viaja en el email o WhatsApp:
+      asunto: 'Aviso de posible picudo rojo',
+      encabezado: 'Aviso de palmera con signos compatibles con picudo rojo.',
+      lineaAdulto: 'Vi un insecto adulto en la palmera o cerca.',
+      cierre: 'Aviso generado con la app Alerta Picudo Rojo (iniciativa educativa de Dr. Árbol). Es una observación ciudadana, no un diagnóstico.',
+    },
+  };
+
   const OTRAS_CAUSAS = ['Daños mecánicos', 'Problemas nutricionales', 'Pudriciones', 'Estrés hídrico', 'Daño por poda', 'Salinidad'];
 
   const DATOS_PERSONALES = [
@@ -352,5 +378,5 @@
     alto: { titulo: 'Nivel de alerta alto', resumen: 'La combinación de signos que marcaste es compatible con actividad de un insecto perforador. Avisanos para que hagamos una preevaluación.' },
   };
 
-  window.APR_CONTENIDO = { ESPECIES, SINTOMAS, TOMAS, ARTICULOS, PLAGAS, ETAPAS, QUE_HACER, QUE_NO_HACER, JURISDICCIONES, MOTIVOS, CONTACTO, enlaceWhatsapp, enlaceEmail, APP, mensajeCompartirApp, enlaceCompartirApp, CICLO_LAMINA, SENASA, enlaceSenasaEmail, enlaceSenasaWhatsapp, OTRAS_CAUSAS, DATOS_PERSONALES, SOLO_BASE, NIVELES, ESCALA, GRADO_LABEL, LOCALIDADES };
+  window.APR_CONTENIDO = { ESPECIES, SINTOMAS, TOMAS, ARTICULOS, PLAGAS, ETAPAS, QUE_HACER, QUE_NO_HACER, JURISDICCIONES, MOTIVOS, CONTACTO, enlaceWhatsapp, enlaceEmail, APP, mensajeCompartirApp, enlaceCompartirApp, CICLO_LAMINA, SENASA, enlaceSenasaEmail, enlaceSenasaWhatsapp, AVISOS, OTRAS_CAUSAS, DATOS_PERSONALES, SOLO_BASE, NIVELES, ESCALA, GRADO_LABEL, LOCALIDADES };
 })();

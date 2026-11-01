@@ -2,6 +2,8 @@
 
 import { C, S, SENALES } from '../data.js';
 import { senalesDe } from '../../../lib/senales.js';
+import { senasaPrimero, textoAviso } from '../../../lib/aviso.js';
+import { botonesSenasa } from './senasa.js';
 import { state } from '../store.js';
 import { esc, ico } from '../ui.js';
 
@@ -39,7 +41,12 @@ function pasoSintomas() {
           <span class="check" aria-hidden="true">${on ? ico('check') : ''}</span>
         </button>`;
     }).join('')}
-  </div>`;
+  </div>
+  ${C.AVISOS.senasa.sintomasQueDisparan.some((id) => state.sintomas.includes(id)) ? `
+    <button type="button" class="pregunta-adulto" data-action="vio-adulto" aria-pressed="${state.vioAdulto}">
+      <span class="check" aria-hidden="true">${state.vioAdulto ? ico('check') : ''}</span>
+      <span><strong>${esc(C.AVISOS.senasa.preguntaAdulto)}</strong><small>${esc(C.AVISOS.senasa.preguntaAdultoAyuda)}</small></span>
+    </button>` : ''}`;
 }
 
 function pasoFotos() {
@@ -94,10 +101,26 @@ function vistaResultado() {
   }[r.nivel];
 
   const extra = r.enlaces.includes('strategus')
-    ? '<p class="aviso-extra">Los orificios y el aserrín en la base también pueden corresponder al escarabajo rinoceronte. Por eso conviene una evaluación profesional.</p>'
+    ? '<p class="aviso-extra">Los orificios y el aserrín en la base también pueden corresponder al escarabajo rinoceronte. Por eso conviene una evaluación profesional. <a href="#/plaga/strategus">Ver la ficha comparativa</a></p>'
     : r.enlaces.includes('plagas')
-      ? '<p class="aviso-extra">Ver un insecto solo no confirma picudo rojo: hay otras especies parecidas. La evaluación profesional lo define.</p>'
+      ? '<p class="aviso-extra">Ver un insecto solo no confirma picudo rojo: hay otras especies parecidas. La evaluación profesional lo define. <a href="#/plagas">Ver otras plagas parecidas</a></p>'
       : '';
+  const jur = C.JURISDICCIONES.find((j) => j.id === state.ajustes.jurisdiccion);
+  const aviso = textoAviso(C, { especie: state.especie, sintomas: state.sintomas, ubicacion: state.ubicacion, jurNombre: jur ? jur.nombre : '', nivel: r.nivel, vioAdulto: state.vioAdulto });
+  const A = C.AVISOS.senasa;
+  const asunto = A.asunto + (jur ? ' — ' + jur.nombre : '');
+  const primeroSenasa = senasaPrimero(A, { sintomas: state.sintomas, vioAdulto: state.vioAdulto, nivel: r.nivel });
+  const panelSenasa = primeroSenasa ? `
+    <div class="panel marco senasa-primero">
+      <p class="eyebrow">Primer paso</p>
+      <h2>${esc(A.tituloPrimero)}</h2>
+      <p class="panel-intro">${esc(A.textoPrimero)}</p>
+      ${botonesSenasa(aviso, asunto)}
+    </div>` : A.nivelesOpcional.includes(r.nivel) ? `
+    <details class="panel marco senasa-opcional">
+      <summary>${esc(A.tituloOpcional)}</summary>
+      ${botonesSenasa(aviso, asunto)}
+    </details>` : '';
 
   return `
   <div class="test">
@@ -111,6 +134,7 @@ function vistaResultado() {
       <div class="paso-meta"><span>Paso 4 de 4 · Listo</span><span>100%</span></div>
     </div>
 
+    ${primeroSenasa ? panelSenasa : ''}
     <div class="resultado resultado-${r.nivel} marco">
       <span class="nivel nivel-${r.nivel}">${ico('alerta')} ${esc(info.titulo)}</span>
       <p class="resultado-resumen">${esc(info.resumen)}</p>
@@ -134,6 +158,7 @@ function vistaResultado() {
       </div>
     </div>
 
+    ${primeroSenasa ? '' : panelSenasa}
     <div class="panel marco recomendaciones">
       <h2>Qué conviene hacer</h2>
       <ol class="lista-num">${consejos.map((c) => `<li>${esc(c)}</li>`).join('')}</ol>

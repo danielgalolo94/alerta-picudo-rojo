@@ -11,15 +11,13 @@ import { validarFormulario } from '../../lib/validaciones.js';
 
 function alternarSintoma(id) {
   if (id === 'ninguno') {
-    update({ sintomas: state.sintomas.includes('ninguno') ? [] : ['ninguno'] });
+    update({ sintomas: state.sintomas.includes('ninguno') ? [] : ['ninguno'], vioAdulto: false });
     return;
   }
   const sinNinguno = state.sintomas.filter((x) => x !== 'ninguno');
-  update({
-    sintomas: sinNinguno.includes(id)
-      ? sinNinguno.filter((x) => x !== id)
-      : [...sinNinguno, id],
-  });
+  const sintomas = sinNinguno.includes(id) ? sinNinguno.filter((x) => x !== id) : [...sinNinguno, id];
+  const conInsecto = C.AVISOS.senasa.sintomasQueDisparan.some((x) => sintomas.includes(x));
+  update({ sintomas, vioAdulto: conInsecto && state.vioAdulto });
 }
 
 async function pedirUbicacion() {
@@ -147,6 +145,10 @@ function onClick(ev) {
     case 'ver-resultado':
       update({ resultado: evaluar(state.sintomas, state.especie, C), paso: 4 });
       scrollArriba();
+      break;
+
+    case 'vio-adulto':
+      update({ vioAdulto: !state.vioAdulto });
       break;
 
     case 'reiniciar-test':
