@@ -15,6 +15,8 @@ import { vistaAlerta } from './views/alerta.js';
 import { vistaListo, vistaReporte, vistaReportes } from './views/reportes.js';
 import { vistaMas, vistaPrivacidad } from './views/mas.js';
 import { vistaPlagas, vistaPlaga } from './views/plagas.js';
+import { vistaPalmeras, vistaPalmera } from './views/palmeras.js';
+import { recordatoriosVencidos } from '../../lib/palmeras.js';
 
 const VISTAS = {
   inicio: vistaInicio,
@@ -30,6 +32,8 @@ const VISTAS = {
   privacidad: vistaPrivacidad,
   plagas: vistaPlagas,
   plaga: vistaPlaga,
+  palmeras: vistaPalmeras,
+  palmera: vistaPalmera,
 };
 
 const TITULOS = {
@@ -46,6 +50,8 @@ const TITULOS = {
   privacidad: 'Privacidad',
   plagas: 'Otras plagas',
   plaga: 'Ficha comparativa',
+  palmeras: 'Mi palmera',
+  palmera: 'Mi palmera',
 };
 
 function render() {
@@ -63,6 +69,15 @@ function route() {
   scrollArriba();
 }
 
+// Recordatorios vencidos: notificación si el permiso está dado; si no, el aviso aparece en Mi palmera.
+function avisarRecordatorios() {
+  const vencidas = recordatoriosVencidos(state.palmeras, Date.now());
+  if (!vencidas.length || typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+  try {
+    new Notification('Alerta Picudo Rojo', { body: 'Es momento de volver a revisar: ' + vencidas.map((p) => p.apodo || p.especie).join(', ') + '.', icon: 'assets/icon-192.png' });
+  } catch (e) { /* algunos navegadores solo notifican desde el service worker: queda el aviso en pantalla */ }
+}
+
 async function init() {
   try {
     const [palmeras, reportes] = await Promise.all([S.leerPalmeras(), S.leerReportes()]);
@@ -74,6 +89,7 @@ async function init() {
     update({ reportes: [], palmeras: [] }, { render: false });
   }
 
+  avisarRecordatorios();
   conectarEventos();
   subscribe(render);
   iniciarRouter(route);

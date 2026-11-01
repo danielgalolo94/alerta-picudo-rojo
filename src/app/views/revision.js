@@ -4,6 +4,7 @@ import { C, S, SENALES } from '../data.js';
 import { senalesDe } from '../../../lib/senales.js';
 import { senasaPrimero, textoAviso } from '../../../lib/aviso.js';
 import { botonesSenasa } from './senasa.js';
+import { guardarEnPalmera } from './palmeras.js';
 import { state } from '../store.js';
 import { esc, ico } from '../ui.js';
 
@@ -159,6 +160,7 @@ function vistaResultado() {
     </div>
 
     ${primeroSenasa ? '' : panelSenasa}
+    ${guardarEnPalmera()}
     <div class="panel marco recomendaciones">
       <h2>Qué conviene hacer</h2>
       <ol class="lista-num">${consejos.map((c) => `<li>${esc(c)}</li>`).join('')}</ol>

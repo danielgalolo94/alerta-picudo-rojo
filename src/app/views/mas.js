@@ -47,7 +47,7 @@ export function vistaMas() {
     <div class="panel marco" style="margin-top:12px">
       <h2>Instalar la app</h2>
       <p class="panel-intro">En el celular, abrí el menú del navegador y elegí <strong>Agregar a pantalla de inicio</strong>. Queda como una app y funciona aunque la conexión sea lenta.</p>
-      <p class="nota">Alerta Picudo Rojo · versión 2.0 · Hecho por DG Soluciones IT para la iniciativa de Dr. Árbol.</p>
+      <p class="nota">Alerta Picudo Rojo · versión 2.0 · Hecho por <a href="https://www.instagram.com/dgsolucionesok/" target="_blank" rel="noopener">DG Soluciones IT</a> para la iniciativa de Dr. Árbol.</p>
     </div>
   </div>`;
 }

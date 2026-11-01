@@ -13,6 +13,7 @@ export const NAV = [
   { id: 'test', label: 'Test', href: '#/test' },
   { id: 'aprender', label: 'Aprender', href: '#/aprender' },
   { id: 'reportes', label: 'Alertas', href: '#/reportes' },
+  { id: 'palmeras', label: 'Palmeras', href: '#/palmeras' },
   { id: 'mas', label: 'Más', href: '#/mas' },
 ];
 

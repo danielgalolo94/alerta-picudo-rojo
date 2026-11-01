@@ -2,6 +2,7 @@
 
 import { C, S, SENALES } from './data.js';
 import { senalesDe } from '../../lib/senales.js';
+import { nuevaPalmera, sumarInspeccion, quitarPalmera, programarRecordatorio } from '../../lib/palmeras.js';
 import { state, update, resetTest, setForm, setJurisdiccion } from './store.js';
 import { ir } from './router.js';
 import { toast, scrollArriba } from './ui.js';
@@ -94,6 +95,47 @@ async function enviarFormulario(ev) {
   ir('listo', rep.id);
 }
 
+/* ───────────────────────── Mi palmera ───────────────────────── */
+
+async function guardarPalmeras(palmeras, msg) {
+  const ok = await S.guardarPalmeras(palmeras);
+  toast(ok ? msg : 'No se pudo guardar en este teléfono', ok ? undefined : 'error');
+  return ok;
+}
+
+async function guardarEnPalmera(id) {
+  const r = state.resultado;
+  if (!r) return;
+  const esp = C.ESPECIES.find((e) => e.id === state.especie);
+  const jur = C.JURISDICCIONES.find((j) => j.id === state.ajustes.jurisdiccion);
+  const inspeccion = {
+    fecha: Date.now(), nivelKey: r.nivel, nivel: (C.NIVELES[r.nivel] || C.NIVELES.bajo).titulo,
+    sintomas: C.SINTOMAS.filter((s) => state.sintomas.includes(s.id) && s.peso > 0).map((s) => s.label),
+    fotos: C.TOMAS.filter((t) => state.fotos[t.id]).map((t) => ({ nombre: t.nombre, dataUrl: state.fotos[t.id].dataUrl })),
+  };
+  const palmeras = id
+    ? sumarInspeccion(state.palmeras, id, inspeccion)
+    : nuevaPalmera(state.palmeras, { especie: esp ? esp.comun : '', jurisdiccion: jur ? jur.nombre : '' }, inspeccion);
+  const destino = id || palmeras[0].id;
+  if (await guardarPalmeras(palmeras, 'Guardada en Mi palmera')) update({ palmeras, palmeraGuardada: destino });
+}
+
+async function alternarRecordatorio(id) {
+  const p = state.palmeras.find((x) => x.id === id);
+  if (p && !p.recordarEl && typeof Notification !== 'undefined' && Notification.permission === 'default') {
+    try { await Notification.requestPermission(); } catch (e) { /* decide la persona */ }
+  }
+  const palmeras = programarRecordatorio(state.palmeras, id, Date.now());
+  const activo = palmeras.find((x) => x.id === id)?.recordarEl;
+  if (await guardarPalmeras(palmeras, activo ? 'Recordatorio activado' : 'Recordatorio cancelado')) update({ palmeras });
+}
+
+async function eliminarPalmera(id) {
+  if (!window.confirm('Se va a borrar esta palmera y su historial de este teléfono. ¿Continuar?')) return;
+  const palmeras = quitarPalmera(state.palmeras, id);
+  if (await guardarPalmeras(palmeras, 'Palmera eliminada')) { update({ palmeras }, { render: false }); ir('palmeras'); }
+}
+
 /* ───────────────────────── Eventos ───────────────────────── */
 
 function onClick(ev) {
@@ -146,6 +188,27 @@ function onClick(ev) {
       update({ resultado: evaluar(state.sintomas, state.especie, C), paso: 4 });
       scrollArriba();
       break;
+
+    case 'guardar-palmera':
+      guardarEnPalmera(objetivo.dataset.id);
+      break;
+
+    case 'recordatorio':
+      alternarRecordatorio(objetivo.dataset.id);
+      break;
+
+    case 'eliminar-palmera':
+      eliminarPalmera(objetivo.dataset.id);
+      break;
+
+    case 'revisar-palmera': {
+      const p = state.palmeras.find((x) => x.id === objetivo.dataset.id);
+      resetTest({ render: false });
+      const esp = p && C.ESPECIES.find((e) => e.comun === p.especie);
+      update({ palmeraDestino: p ? p.id : null, especie: esp ? esp.id : '' }, { render: false });
+      ir('test');
+      break;
+    }
 
     case 'vio-adulto':
       update({ vioAdulto: !state.vioAdulto });

@@ -9,6 +9,7 @@ function navActivo() {
   if (p === 'test') return 'test';
   if (['aprender', 'articulo', 'sospecho', 'plagas', 'plaga'].includes(p)) return 'aprender';
   if (['alerta', 'listo', 'reporte', 'reportes'].includes(p)) return 'reportes';
+  if (['palmeras', 'palmera'].includes(p)) return 'palmeras';
   if (['mas', 'privacidad'].includes(p)) return 'mas';
   return 'inicio';
 }
@@ -51,7 +52,7 @@ export function layout(contenido) {
 
     <footer class="pie">
       <div class="pie-inner">
-        <p class="pie-marca"><span class="dg-mark" aria-hidden="true">DG</span> Hecho por <strong>DG Soluciones IT</strong></p>
+        <p class="pie-marca"><span class="dg-mark" aria-hidden="true">DG</span> Hecho por <a href="https://www.instagram.com/dgsolucionesok/" target="_blank" rel="noopener"><strong>DG Soluciones IT</strong> · @dgsolucionesok</a></p>
         <p class="pie-apoyo">Apoyamos la iniciativa de Dr. Árbol para cuidar las palmeras.</p>
       </div>
     </footer>

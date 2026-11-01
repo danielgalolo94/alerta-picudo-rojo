@@ -14,6 +14,8 @@ export const state = {
   ajustes: S.leerAjustes(),
   reportes: [],
   palmeras: [],
+  palmeraDestino: null,  // la palmera que se está revisando de nuevo (desde su ficha)
+  palmeraGuardada: null, // a dónde se guardó el resultado actual
   ultimo: null,
   ubicacion: null,
   ubicacionError: '',
@@ -58,6 +60,8 @@ export function resetTest({ render = true } = {}) {
     vioAdulto: false,
     fotos: {},
     resultado: null,
+    palmeraDestino: null,
+    palmeraGuardada: null,
     ubicacion: null,
     ubicacionError: '',
     errores: [],
