@@ -1360,3 +1360,14 @@ h1, h2, h3, h4 {
 .nav-bottom a span { font-size: 11px; }
 .pie-marca a { color: inherit; text-decoration: none; }
 .pie-marca a:hover strong, .pie-marca a:focus-visible strong { text-decoration: underline; }
+
+/* Recorrido y consulta */
+.recorrido .progreso { margin: 8px 0 14px; }
+.recorrido-img { margin: 10px 0; border-radius: 10px; overflow: hidden; background: #f3f5ef; }
+.recorrido-img img { display: block; width: 100%; max-height: 360px; object-fit: contain; }
+.recorrido-puntos { list-style: none; padding: 0; margin: 10px 0 0; }
+.recorrido-puntos li { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid rgba(26,28,26,.08); }
+.recorrido-puntos li span { flex: 0 0 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: #e9f0ea; color: var(--verde); font-weight: 700; }
+.recorrido-puntos.no li span { background: var(--rojo-bg); color: var(--rojo-2); }
+.test-nav { display: grid; gap: 10px; margin-top: 14px; }
+.chip.on { background: var(--verde); color: #fff; border-color: var(--verde); }

@@ -13,6 +13,10 @@ export function vistaAprender() {
     <p class="eyebrow">Biblioteca</p>
     <h1>Aprender</h1>
     <p class="lead-oscuro">Qué es el picudo rojo, cómo daña la palmera, qué signos buscar y qué hacer ante una duda. Contenido para leer y volver cuando lo necesites.</p>
+    <a class="panel marco destacado-plagas" href="#/recorrido/1">
+      <strong>Reconocer el picudo en 5 minutos</strong>
+      <span>Cuatro tarjetas: qué es, dónde mirar, qué señales buscar y qué no hacer.</span>
+    </a>
     <a class="panel marco destacado-plagas" href="#/plagas">
       <strong>Diferencial: otras plagas y causas</strong>
       <span>Picudo negro, paysandisia, vaquita, escarabajo rinoceronte y daños que no son plagas.</span>

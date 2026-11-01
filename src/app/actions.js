@@ -189,6 +189,10 @@ function onClick(ev) {
       scrollArriba();
       break;
 
+    case 'motivo-consulta':
+      update({ motivoConsulta: objetivo.dataset.motivo });
+      break;
+
     case 'guardar-palmera':
       guardarEnPalmera(objetivo.dataset.id);
       break;

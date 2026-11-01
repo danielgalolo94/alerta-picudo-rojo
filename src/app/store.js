@@ -20,6 +20,7 @@ export const state = {
   ubicacion: null,
   ubicacionError: '',
   tabSospecho: 'hacer',
+  motivoConsulta: '',
   form: {
     email: '',
     nombre: '',

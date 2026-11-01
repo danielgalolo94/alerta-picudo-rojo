@@ -16,6 +16,8 @@ import { vistaListo, vistaReporte, vistaReportes } from './views/reportes.js';
 import { vistaMas, vistaPrivacidad } from './views/mas.js';
 import { vistaPlagas, vistaPlaga } from './views/plagas.js';
 import { vistaPalmeras, vistaPalmera } from './views/palmeras.js';
+import { vistaRecorrido } from './views/recorrido.js';
+import { vistaDrArbol } from './views/drarbol.js';
 import { recordatoriosVencidos } from '../../lib/palmeras.js';
 
 const VISTAS = {
@@ -34,6 +36,8 @@ const VISTAS = {
   plaga: vistaPlaga,
   palmeras: vistaPalmeras,
   palmera: vistaPalmera,
+  recorrido: vistaRecorrido,
+  drarbol: vistaDrArbol,
 };
 
 const TITULOS = {
@@ -52,6 +56,8 @@ const TITULOS = {
   plaga: 'Ficha comparativa',
   palmeras: 'Mi palmera',
   palmera: 'Mi palmera',
+  recorrido: 'Reconocer el picudo',
+  drarbol: 'Consultar a Dr. Árbol',
 };
 
 function render() {

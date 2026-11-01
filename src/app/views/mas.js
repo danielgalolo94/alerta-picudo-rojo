@@ -29,6 +29,7 @@ export function vistaMas() {
         <p>Consultas, evaluación profesional y prevención.</p>
         <div class="contacto-linea"><strong>WhatsApp</strong><a href="${esc(C.enlaceWhatsapp('Hola Dr. Árbol, quiero consultar por una palmera.'))}" target="_blank" rel="noopener">${esc(C.CONTACTO.whatsappLegible)}</a></div>
         <div class="contacto-linea"><strong>Email</strong><a href="mailto:${esc(C.CONTACTO.email)}">${esc(C.CONTACTO.email)}</a></div>
+        <a class="btn btn-outline btn-chico" href="#/drarbol">Elegir motivo y canal</a>
       </section>
 
       <section class="panel marco">

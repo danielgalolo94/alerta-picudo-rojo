@@ -16,6 +16,7 @@ test('toda imagen nombrada en el contenido existe en el repo (si no, se vería r
   const { C, SENALES } = cargarContenido();
   const rutas = [
     ...C.ETAPAS.map((e) => e.imagen),
+    ...C.RECORRIDO.map((r) => (r.img ? 'assets/images/' + r.img + '.webp' : '')),
     ...C.PLAGAS.flatMap((p) => [p.miniatura, ...p.fotos.map((f) => f.img)]),
     ...Object.values(SENALES).flatMap((e) => [e.croquis, ...e.sintomas.flatMap((s) => s.fotos ?? [])]),
   ].map(imagen).filter(Boolean);

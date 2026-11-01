@@ -22,7 +22,7 @@ export function vistaInicio() {
       <p class="lead">El picudo rojo se detecta mirando. Revisá las señales visibles en 4 pasos y, si algo no cierra, avisanos.</p>
       <div class="hero-acciones">
         <button type="button" class="btn btn-rojo" data-action="empezar-test">Hacer el test en 4 pasos ${ico('flecha')}</button>
-        <a class="btn btn-linea-clara" href="#/aprender">Aprender a reconocerlo</a>
+        <a class="btn btn-linea-clara" href="#/recorrido/1">Aprender a reconocerlo</a>
       </div>
       <ul class="hero-datos"><li>4 pasos</li><li>2 minutos</li><li>Sin registro</li></ul>
     </div>
@@ -41,7 +41,7 @@ export function vistaInicio() {
       ${acceso('libro', 'Aprender sobre el picudo', 'Biblioteca, ciclo biológico y mitos', '#/aprender')}
       ${acceso('escudo', '¿Qué hago si sospecho?', 'Qué hacer y qué no hacer', '#/sospecho')}
       ${acceso('alerta', 'Enviar una alerta', 'Reportá una palmera sospechosa', '#/alerta')}
-      ${acceso('arbol', 'Consultar a Dr. Árbol', 'Evaluación profesional y prevención', C.enlaceWhatsapp('Hola Dr. Árbol, quiero consultar por una palmera.'), true)}
+      ${acceso('arbol', 'Consultar a Dr. Árbol', 'Evaluación profesional y prevención', '#/drarbol')}
     </div>
   </section>
 

@@ -263,6 +263,30 @@
 
   const MOTIVOS = ['Diagnóstico', 'Sospecha', 'Prevención', 'Tratamiento'];
 
+  // Recorrido "Reconocer el picudo en 5 minutos". img: nombre en assets/images (sin extensión), vacío = sin foto.
+  // no: true marca la tarjeta de "qué no hacer" (cruces en vez de tildes).
+  const RECORRIDO = [
+    { kicker: '1 de 4 · Qué es', titulo: 'Un gorgojo que daña desde adentro', img: 'picudo-rojo-adulto-uno',
+      alt: 'Adulto de picudo rojo visto desde arriba: cuerpo rojizo con manchas negras en el dorso y pico largo y curvo',
+      puntos: ['Es un insecto rojizo de 2 a 4 cm, con un pico curvo.', 'El daño lo hace la larva, que vive y come dentro de la palmera.', 'Por eso la palmera puede estar afectada meses antes de que se note algo desde afuera.'] },
+    { kicker: '2 de 4 · Dónde mirar', titulo: 'Tres zonas de la palmera', img: 'partes-palmera',
+      alt: 'Palmera con sus partes señaladas',
+      puntos: ['La corona, el conjunto de hojas: si pierde su forma pareja.', 'Las hojas del centro, donde crece la palmera (cogollo): si se inclinan o se caen.', 'La base de las hojas, donde se unen al tronco: fibras deshilachadas, orificios y restos masticados.'] },
+    { kicker: '3 de 4 · Signos', titulo: 'Qué señales buscar', img: 'signos-tempranos-picudo',
+      alt: 'Signos tempranos de picudo rojo en una palmera',
+      puntos: ['Hojas con muescas o cortes regulares.', 'Fibras deshilachadas, aserrín húmedo y olor a fermento.', 'Hojas centrales caídas: es un signo avanzado.', 'Un signo solo no confirma nada. Varios juntos justifican avisarnos.'] },
+    { kicker: '4 de 4 · Qué no hacer', titulo: 'Ante una duda, no intervengas', img: '', no: true,
+      puntos: ['No podes la palmera.', 'No trasladés hojas, restos ni ejemplares.', 'No apliques productos por tu cuenta.', 'No abras ni perfores el tronco para buscar larvas.'] },
+  ];
+
+  // Canales para consultar a Dr. Árbol. tipo: whatsapp | email | llamada. El mensaje lleva el motivo elegido.
+  const CANALES_CONSULTA = [
+    { id: 'whatsapp', label: 'Escribir por WhatsApp', tipo: 'whatsapp', mensaje: 'Hola, escribo desde la app Alerta Picudo Rojo.' },
+    { id: 'visita', label: 'Solicitar una visita técnica', tipo: 'whatsapp', mensaje: 'Hola, quiero solicitar una visita técnica para evaluar palmeras.' },
+    { id: 'email', label: 'Enviar un email', tipo: 'email', asunto: 'Consulta desde la app', mensaje: 'Hola,\n\nCuento mi situación:\n\n\n(Adjunto las fotografías de la palmera.)' },
+    { id: 'llamada', label: 'Llamar', tipo: 'llamada' },
+  ];
+
   // Canal de contacto de la iniciativa. El WhatsApp va sin signos ni espacios,
   // con código de país y el 9 de celular que exige wa.me.
   const CONTACTO = {
@@ -378,5 +402,5 @@
     alto: { titulo: 'Nivel de alerta alto', resumen: 'La combinación de signos que marcaste es compatible con actividad de un insecto perforador. Avisanos para que hagamos una preevaluación.' },
   };
 
-  window.APR_CONTENIDO = { ESPECIES, SINTOMAS, TOMAS, ARTICULOS, PLAGAS, ETAPAS, QUE_HACER, QUE_NO_HACER, JURISDICCIONES, MOTIVOS, CONTACTO, enlaceWhatsapp, enlaceEmail, APP, mensajeCompartirApp, enlaceCompartirApp, CICLO_LAMINA, SENASA, enlaceSenasaEmail, enlaceSenasaWhatsapp, AVISOS, OTRAS_CAUSAS, DATOS_PERSONALES, SOLO_BASE, NIVELES, ESCALA, GRADO_LABEL, LOCALIDADES };
+  window.APR_CONTENIDO = { ESPECIES, SINTOMAS, TOMAS, ARTICULOS, PLAGAS, ETAPAS, QUE_HACER, QUE_NO_HACER, JURISDICCIONES, MOTIVOS, CONTACTO, enlaceWhatsapp, enlaceEmail, APP, mensajeCompartirApp, enlaceCompartirApp, CICLO_LAMINA, SENASA, enlaceSenasaEmail, enlaceSenasaWhatsapp, AVISOS, RECORRIDO, CANALES_CONSULTA, OTRAS_CAUSAS, DATOS_PERSONALES, SOLO_BASE, NIVELES, ESCALA, GRADO_LABEL, LOCALIDADES };
 })();
