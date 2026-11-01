@@ -219,6 +219,11 @@ function onClick(ev) {
       eliminarReporte(objetivo.dataset.id);
       break;
 
+    case 'consulta-motivo': // desde otra pantalla: elige el motivo y abre la consulta
+      update({ motivoConsulta: objetivo.dataset.motivo }, { render: false });
+      ir('drarbol');
+      break;
+
     case 'motivo-consulta':
       update({ motivoConsulta: objetivo.dataset.motivo });
       break;

@@ -84,8 +84,8 @@ export function vistaAlerta() {
         </div>
 
         <div class="campo full">
-          <label for="com">Comentarios</label>
-          <textarea id="com" data-campo="comentarios" rows="4" placeholder="Qué viste, desde cuándo, si hay otras palmeras cerca…">${esc(state.form.comentarios)}</textarea>
+          <label for="com">Comentarios <small>(hasta 500 caracteres)</small></label>
+          <textarea id="com" data-campo="comentarios" rows="4" maxlength="500" placeholder="Qué viste, desde cuándo, si hay otras palmeras cerca…">${esc(state.form.comentarios)}</textarea>
         </div>
 
         <div class="campo full">

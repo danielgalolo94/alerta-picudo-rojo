@@ -30,6 +30,7 @@ export function vistaMas() {
         <div class="contacto-linea"><strong>WhatsApp</strong><a href="${esc(C.enlaceWhatsapp('Hola Dr. Árbol, quiero consultar por una palmera.'))}" target="_blank" rel="noopener">${esc(C.CONTACTO.whatsappLegible)}</a></div>
         <div class="contacto-linea"><strong>Email</strong><a href="mailto:${esc(C.CONTACTO.email)}">${esc(C.CONTACTO.email)}</a></div>
         <a class="btn btn-outline btn-chico" href="#/drarbol">Elegir motivo y canal</a>
+        <a class="btn btn-outline btn-chico" href="#/institucional">Sobre Dr. Árbol</a>
       </section>
 
       <section class="panel marco">
@@ -48,6 +49,7 @@ export function vistaMas() {
         <h2>Privacidad</h2>
         <p>Los reportes, fotos y datos de contacto se guardan solo en este dispositivo. La app no los envía a ningún servidor: vos elegís cuándo compartirlos.</p>
         <a class="btn btn-outline btn-chico" href="#/privacidad">Leer el detalle</a>
+        <a class="btn btn-outline btn-chico" href="#/terminos">Condiciones de uso</a>
       </section>
 
       <section class="panel marco">
@@ -63,6 +65,19 @@ export function vistaMas() {
       <p class="nota">Alerta Picudo Rojo · versión 2.0 · Hecho por <a href="https://www.instagram.com/dgsolucionesok/" target="_blank" rel="noopener">DG Soluciones IT</a> para la iniciativa de Dr. Árbol.</p>
     </div>
   </div>`;
+}
+
+const TEXTO_PERMISO = {
+  concedido: 'Permitido en este navegador',
+  denegado: 'Bloqueado en este navegador',
+  'sin-pedir': 'Todavía no se pidió',
+  'no-aplica': 'La app no pide este permiso',
+  desconocido: 'Este navegador no informa el estado',
+};
+
+function estadoPermiso(id) {
+  const p = state.permisosNavegador;
+  return p ? TEXTO_PERMISO[p[id]] || TEXTO_PERMISO.desconocido : 'Consultando…';
 }
 
 export function vistaPrivacidad() {
@@ -87,13 +102,21 @@ export function vistaPrivacidad() {
     </div>
 
     <div class="panel marco">
+      <h2>Permisos del teléfono</h2>
+      <p class="panel-intro">La app pide un permiso solo cuando usás la función que lo necesita. Podés quitarlo cuando quieras desde la configuración del sitio en tu navegador (el candado junto a la dirección).</p>
+      <ul class="datos-lista">
+        ${C.PERMISOS.map((p) => `<li><strong>${esc(p.nombre)}</strong><span>${esc(p.para)}</span><small class="permiso-estado">${esc(estadoPermiso(p.id))}</small></li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="panel marco">
       <h2>Ubicación y fotos</h2>
       <p>La ubicación es opcional y se guarda aproximada. Las fotos se reducen en el teléfono antes de guardarse. Podés quitar una foto antes de generar el reporte y borrar todos tus datos desde Más.</p>
     </div>
 
     <div class="resultado-acciones">
       <a class="btn btn-verde" href="#/inicio">Volver al inicio</a>
-      <a class="btn btn-outline" href="#/mas">Ir a Más</a>
+      <a class="btn btn-outline" href="#/terminos">Condiciones de uso</a>
     </div>
   </div>`;
 }

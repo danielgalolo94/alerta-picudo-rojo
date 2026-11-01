@@ -372,11 +372,53 @@
 
   const OTRAS_CAUSAS = ['Daños mecánicos', 'Problemas nutricionales', 'Pudriciones', 'Estrés hídrico', 'Daño por poda', 'Salinidad'];
 
+  // Pantalla "Cómo proteger mi palmera". Sale de la biblioteca (Prevención y monitoreo) y de "Qué no hacer".
+  const PREVENCION = {
+    intro: 'Cuanto antes se detecta actividad, más opciones de manejo existen y menor es el riesgo de que pase a las palmeras vecinas.',
+    motivo: 'Prevención',
+    pasos: [
+      { titulo: 'Revisala una vez por mes', texto: 'Siempre en las mismas zonas: corona, base de las hojas y tronco. Revisar de forma periódica detecta cambios que una mirada casual no registra.' },
+      { titulo: 'Registrá cada revisión', texto: 'Con fecha y fotos. Una palmera que cambia entre dos revisiones dice más que una sola foto. Podés guardarla en Mi palmera y pedir un recordatorio.' },
+      { titulo: 'Cuidado con las podas', texto: 'Las heridas de poda son puntos de entrada. Una poda sin criterio puede empeorar la situación: consultá antes de podar.' },
+      { titulo: 'No apliques productos por tu cuenta', texto: 'La elección y aplicación de un fitosanitario corresponde a un profesional habilitado.' },
+      { titulo: 'Preguntá por la endoterapia', texto: 'Un profesional introduce el tratamiento en el sistema vascular de la palmera. Se evalúa caso por caso y solo en palmeras sin signos sospechosos. No garantiza una protección total y no reemplaza la revisión periódica.' },
+      { titulo: 'No trasladés material vegetal', texto: 'Hojas, restos y ejemplares pueden llevar el problema a otra zona.' },
+    ],
+  };
+
+  // Pantalla "Sobre Dr. Árbol". historia: texto propio de Dr. Árbol (vacío = no se muestra).
+  const INSTITUCIONAL = {
+    queHace: 'Dr. Árbol brinda evaluación profesional, prevención y tratamiento de palmeras. Ante una sospecha de picudo rojo, evalúa el caso y te ayuda a derivarlo al organismo de tu provincia.',
+    iniciativa: 'Alerta Picudo Rojo es una iniciativa educativa de Dr. Árbol para que cualquier vecino pueda revisar sus palmeras y avisar a tiempo. Es gratuita y no necesita cuenta.',
+    historia: '',
+    donacion: 'La app fue desarrollada por DG Soluciones IT y donada a Dr. Árbol en apoyo a la iniciativa.',
+  };
+
+  // Permisos del navegador. api: nombre en navigator.permissions (null = la app no pide ese permiso).
+  const PERMISOS = [
+    { id: 'ubicacion', api: 'geolocation', nombre: 'Ubicación', para: 'Solo si tocás "Usar mi ubicación" en el formulario. Se guarda aproximada (unos 100 m) en el reporte.' },
+    { id: 'notificaciones', api: 'notifications', nombre: 'Notificaciones', para: 'Solo para el recordatorio de volver a revisar una palmera a los 30 días.' },
+    { id: 'camara', api: null, nombre: 'Cámara y fotos', para: 'Al agregar una foto, el teléfono te deja sacarla o elegirla de la galería. La app recibe solo la foto que elegís.' },
+  ];
+
+  // Términos de uso. Revisarlos con un abogado antes de cambiarlos; actualizar la fecha.
+  const LEGAL = {
+    actualizado: '01/11/2026',
+    secciones: [
+      { titulo: 'Qué es la app', texto: 'Alerta Picudo Rojo es una herramienta gratuita de orientación ciudadana de Dr. Árbol para reconocer signos del picudo rojo en palmeras y saber cómo actuar.' },
+      { titulo: 'No es un diagnóstico', texto: 'El nivel de alerta es orientativo: se calcula con criterios en revisión técnica y no reemplaza la evaluación de un profesional habilitado ni la identificación oficial del Senasa.' },
+      { titulo: 'Tus datos', texto: 'La app no tiene cuentas ni servidor propio. Los reportes, las fotos y tus datos de contacto quedan guardados solo en tu dispositivo, y podés borrarlos cuando quieras desde Más.' },
+      { titulo: 'Cuando compartís', texto: 'Si enviás un reporte por WhatsApp, por email o al Senasa, lo recibe quien elegiste y se aplican las condiciones del servicio que uses. Compartí solo datos y fotos que tengas derecho a compartir.' },
+      { titulo: 'Uso responsable', texto: 'No hagas reportes falsos. No entres a propiedades ajenas para revisar una palmera y no la intervengas: podar, perforar o aplicar productos corresponde a un profesional.' },
+      { titulo: 'Contenido', texto: 'Los textos y las imágenes tienen fines educativos y pueden actualizarse. Ante una duda sobre tu caso, consultá a un profesional.' },
+    ],
+  };
+
   const DATOS_PERSONALES = [
     { dato: 'Ubicación', uso: 'Para saber a qué provincia derivar el reporte y mostrarte la información correspondiente. Se guarda aproximada.' },
-    { dato: 'Fotografías', uso: 'Para la orientación inicial y la derivación. Se procesan en tu teléfono y se reducen antes de enviarse.' },
-    { dato: 'Email', uso: 'Para responderte y darte seguimiento del reporte.' },
-    { dato: 'Síntomas marcados', uso: 'Para calcular el nivel de alerta y, de forma agregada y anónima, conocer los síntomas más frecuentes por zona.' },
+    { dato: 'Fotografías', uso: 'Para acompañar el reporte. Se reducen en tu teléfono y quedan guardadas ahí; salen solo si compartís el reporte.' },
+    { dato: 'Email', uso: 'Para que Dr. Árbol pueda responderte, si le enviás el reporte.' },
+    { dato: 'Síntomas marcados', uso: 'Para calcular el nivel de alerta, en tu teléfono.' },
     { dato: 'Notificaciones', uso: 'Solo si las activás. Podés desactivarlas en cualquier momento.' },
   ];
 
@@ -402,5 +444,5 @@
     alto: { titulo: 'Nivel de alerta alto', resumen: 'La combinación de signos que marcaste es compatible con actividad de un insecto perforador. Avisanos para que hagamos una preevaluación.' },
   };
 
-  window.APR_CONTENIDO = { ESPECIES, SINTOMAS, TOMAS, ARTICULOS, PLAGAS, ETAPAS, QUE_HACER, QUE_NO_HACER, JURISDICCIONES, MOTIVOS, CONTACTO, enlaceWhatsapp, enlaceEmail, APP, mensajeCompartirApp, enlaceCompartirApp, CICLO_LAMINA, SENASA, enlaceSenasaEmail, enlaceSenasaWhatsapp, AVISOS, RECORRIDO, CANALES_CONSULTA, OTRAS_CAUSAS, DATOS_PERSONALES, SOLO_BASE, NIVELES, ESCALA, GRADO_LABEL, LOCALIDADES };
+  window.APR_CONTENIDO = { ESPECIES, SINTOMAS, TOMAS, ARTICULOS, PLAGAS, ETAPAS, QUE_HACER, QUE_NO_HACER, JURISDICCIONES, MOTIVOS, CONTACTO, enlaceWhatsapp, enlaceEmail, APP, mensajeCompartirApp, enlaceCompartirApp, CICLO_LAMINA, SENASA, enlaceSenasaEmail, enlaceSenasaWhatsapp, AVISOS, RECORRIDO, CANALES_CONSULTA, OTRAS_CAUSAS, DATOS_PERSONALES, PREVENCION, INSTITUCIONAL, PERMISOS, LEGAL, SOLO_BASE, NIVELES, ESCALA, GRADO_LABEL, LOCALIDADES };
 })();

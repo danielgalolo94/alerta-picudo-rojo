@@ -2,7 +2,7 @@
 // Red primero: con señal siempre se ve la última versión publicada; sin señal, la copia guardada.
 // El esqueleto se guarda al instalar; las fotos y demás archivos, la primera vez que se abren.
 // Si se agrega un archivo de la app, sumarlo a ESQUELETO (tests/sw.test.js avisa si falta).
-const CACHE = 'apr-v2';
+const CACHE = 'apr-v3';
 const ESQUELETO = [
   './',
   'index.html',
@@ -21,6 +21,7 @@ const ESQUELETO = [
   'src/app/ui.js',
   'src/app/views/alerta.js',
   'src/app/views/drarbol.js',
+  'src/app/views/info.js',
   'src/app/views/aprender.js',
   'src/app/views/inicio.js',
   'src/app/views/mas.js',
@@ -35,6 +36,7 @@ const ESQUELETO = [
   'lib/codigo-reporte.js',
   'lib/evaluador.js',
   'lib/palmeras.js',
+  'lib/permisos.js',
   'lib/rutas.js',
   'lib/senales.js',
   'lib/ubicacion.js',

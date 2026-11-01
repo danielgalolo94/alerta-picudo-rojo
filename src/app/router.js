@@ -3,6 +3,7 @@
 const PANTALLAS = new Set([
   'inicio', 'test', 'aprender', 'articulo', 'sospecho', 'alerta',
   'listo', 'reporte', 'reportes', 'mas', 'privacidad', 'plagas', 'plaga', 'palmeras', 'palmera', 'recorrido', 'drarbol',
+  'prevencion', 'institucional', 'terminos',
 ]);
 
 // Un link cortado (ej. "%E0") no se puede decodificar: se usa tal cual en vez de romper la app.

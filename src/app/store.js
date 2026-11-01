@@ -34,6 +34,7 @@ export const state = {
   },
   errores: [],
   modal: null,
+  permisosNavegador: null, // estado de los permisos del navegador (pantalla Privacidad)
   zoom: null, // foto ampliada del paso 2: { src, titulo }
 };
 

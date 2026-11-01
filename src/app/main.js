@@ -18,6 +18,9 @@ import { vistaPlagas, vistaPlaga } from './views/plagas.js';
 import { vistaPalmeras, vistaPalmera } from './views/palmeras.js';
 import { vistaRecorrido } from './views/recorrido.js';
 import { vistaDrArbol } from './views/drarbol.js';
+import { vistaPrevencion, vistaInstitucional, vistaTerminos } from './views/info.js';
+import { leerPermisos } from '../../lib/permisos.js';
+import { C } from './data.js';
 import { recordatoriosVencidos } from '../../lib/palmeras.js';
 
 const VISTAS = {
@@ -38,6 +41,9 @@ const VISTAS = {
   palmera: vistaPalmera,
   recorrido: vistaRecorrido,
   drarbol: vistaDrArbol,
+  prevencion: vistaPrevencion,
+  institucional: vistaInstitucional,
+  terminos: vistaTerminos,
 };
 
 const TITULOS = {
@@ -58,6 +64,9 @@ const TITULOS = {
   palmera: 'Mi palmera',
   recorrido: 'Reconocer el picudo',
   drarbol: 'Consultar a Dr. Árbol',
+  prevencion: 'Cómo proteger mi palmera',
+  institucional: 'Dr. Árbol',
+  terminos: 'Condiciones de uso',
 };
 
 function render() {
@@ -86,6 +95,9 @@ function route() {
   update({ pantalla: pantallaValida(pantalla), parametro }, { render: false });
   render();
   scrollArriba();
+  if (state.pantalla === 'privacidad') {
+    leerPermisos(C.PERMISOS, navigator.permissions).then((p) => { if (state.pantalla === 'privacidad') update({ permisosNavegador: p }); });
+  }
 }
 
 // Recordatorios vencidos: notificación si el permiso está dado; si no, el aviso aparece en Mi palmera.

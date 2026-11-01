@@ -161,6 +161,7 @@ function vistaResultado() {
         <button type="button" class="link" data-action="reiniciar-test">Volver a hacer el test</button>
         <span aria-hidden="true"> · </span>
         <a href="#/sospecho">Qué hacer ahora</a>
+        ${r.nivel === 'bajo' ? '<span aria-hidden="true"> · </span><a href="#/prevencion">Cómo proteger mi palmera</a>' : ''}
       </div>
     </div>
 

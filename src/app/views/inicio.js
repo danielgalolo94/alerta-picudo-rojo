@@ -42,6 +42,7 @@ export function vistaInicio() {
       ${acceso('escudo', '¿Qué hago si sospecho?', 'Qué hacer y qué no hacer', '#/sospecho')}
       ${acceso('alerta', 'Enviar una alerta', 'Reportá una palmera sospechosa', '#/alerta')}
       ${acceso('arbol', 'Consultar a Dr. Árbol', 'Evaluación profesional y prevención', '#/drarbol')}
+      ${acceso('palmeras', 'Cómo proteger mi palmera', 'Prevención y revisión periódica', '#/prevencion')}
     </div>
   </section>
 
